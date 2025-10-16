@@ -295,6 +295,8 @@ h2 {
     flex-wrap: wrap;
     align-items: flex-start; // 顶部对齐
     padding-left: 10px;
+    width: 100%;
+    aspect-ratio: 16/9;
 
     .tab {
         flex: 0 0 15%;
@@ -423,7 +425,7 @@ h2 {
         }
     }
 
-    @media screen and (max-width: 990px) {
+    @media screen and (max-width: 900px) {
         .tab {
             flex: 0 0 100%;
             height: auto;
@@ -438,12 +440,19 @@ h2 {
 
         .rside {
             flex: 0 0 100%;
-            padding-left: 0;
             margin-top: 20px;
+        }
+
+        .fruit-list {
+            padding: 10px;
+
+            ul {
+                padding: 5px;
+            }
         }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 500px) {
         .fruit-list {
             padding-left: 0;
 
@@ -489,7 +498,7 @@ h2 {
         font-size: 20px; // 图标大小
     }
 
-    @media screen and (max-width: 990px) {
+    @media screen and (max-width: 900px) {
         display: none;
     }
 }
