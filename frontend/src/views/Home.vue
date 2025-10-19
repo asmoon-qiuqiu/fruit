@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-
-
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 // 控制返回顶部按钮显示/隐藏的状态（默认隐藏）
 const showBackTop = ref(false)
 
@@ -34,14 +34,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="header">
-        <router-link to="/">首页</router-link>
-        <a href="#">水果种类</a>
-        <a href="#">关于我们</a>
-        <a href="#">联系我们</a>
-        <a href="#"><i class="bi bi-box-arrow-in-right"></i>登录</a>
-    </div>
+    <!-- 头部导航 -->
+    <Header></Header>
 
+    <!-- 轮播图 -->
     <div class="banner">
         <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
             data-bs-scroll="false">
@@ -71,6 +67,7 @@ onUnmounted(() => {
     </div>
 
     <h2>水果目录</h2>
+    <!-- 内容 -->
     <div class="main">
         <div class="tab">
             <button class="tablinks">苹果</button>
@@ -136,13 +133,8 @@ onUnmounted(() => {
         </div>
     </div>
 
-    <div class="footer">
-        <div class="footer-content">
-            <p class="footer-addr">地址: 广东省惠州市惠东县黄埠镇</p>
-            <p class="footer-email">联系邮箱: 2371824615@qq.com</p>
-            <p class="footer-copyright">© 2025 个人制作 版权所有</p>
-        </div>
-    </div>
+    <!-- 底部 -->
+    <Footer></Footer>
 
     <!-- 返回顶部按钮：默认隐藏，滚动到指定高度显示 -->
     <button class="back-to-top" v-show="showBackTop" @click="scrollToTop">
@@ -151,61 +143,10 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
-* {
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
 h2 {
     color: #24f563;
     margin: 20px 0;
     padding-left: 10px;
-}
-
-.header {
-    background-color: #24f563;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-
-    a {
-        font-size: 18px;
-        padding: 15px;
-        text-decoration: none;
-        color: #333;
-
-        .bi {
-            margin-right: 5px;
-        }
-
-        &:hover,
-        &:active {
-            background-color: #34ca61;
-            color: #F5F9FF;
-        }
-    }
-
-    @media screen and (max-width: 600px) {
-        font-size: 18px;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100vw;
-        /* 占满整个视口宽度 */
-        min-width: 320px;
-
-        /* 确保在极小屏幕上不被过度压缩 */
-        a {
-
-            &:hover,
-            &:active {
-                background-color: rgba(0, 0, 0, 0);
-            }
-        }
-    }
 }
 
 .banner {
@@ -275,6 +216,7 @@ h2 {
         background-color: rgba(255, 255, 255, 0.6);
         border-radius: 50%;
         padding: 0;
+        margin: 0 5px 0 0;
         z-index: 10; // 确保按钮在最上层
 
         .carousel-control-prev-icon,
@@ -500,77 +442,6 @@ h2 {
 
     @media screen and (max-width: 900px) {
         display: none;
-    }
-}
-
-.footer {
-    background-color: #24f563;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 10px;
-    margin-top: 60px;
-    opacity: 0.85;
-    transition: opacity 0.3s ease;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
-
-    &:hover {
-        opacity: 1;
-    }
-
-    .footer-content {
-        /* 限制最大宽度，大屏下不拉伸 */
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-        text-align: center;
-
-        /* 地址文字样式 */
-        .footer-addr {
-            color: #2d3748;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        /* 邮箱文字样式 */
-        .footer-email {
-            color: #2d3748;
-            font-size: 16px;
-            margin-bottom: 12px;
-
-            /* 邮箱hover时变色，增加交互感 */
-            &:hover {
-                color: #ffffff;
-                cursor: pointer;
-            }
-        }
-
-        /* 版权信息样式 */
-        .footer-copyright {
-            color: #4a5568;
-            /* 稍浅灰色，区分主次信息 */
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    }
-
-    /* 响应式适配：小屏幕下调整文字大小和内边距 */
-    @media screen and (max-width: 600px) {
-        padding: 25px 10px;
-        margin-top: 40px;
-
-        .footer-content {
-
-            .footer-addr,
-            .footer-email {
-                font-size: 14px;
-            }
-
-            .footer-copyright {
-                font-size: 12px;
-            }
-        }
     }
 }
 </style>

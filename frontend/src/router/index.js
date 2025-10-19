@@ -7,6 +7,11 @@ const router = createRouter({
       path: '/', //根路径
       name: 'home', //路由名称
       component: () => import('../views/Home.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login.vue')
     }
   ],
 })
