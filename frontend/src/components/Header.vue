@@ -15,7 +15,7 @@
     background-color: #24f563;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-radius: 5px;
 

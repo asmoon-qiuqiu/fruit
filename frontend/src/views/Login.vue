@@ -83,13 +83,13 @@ const togglePassword = () => {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
     .login-banner {
-        flex: 1; // 占比 50% 左右（可根据设计调整）
+        flex: 1; // 占比 50% 左右
         background: linear-gradient(160deg, #1b64ff, #31acfb); // 渐变蓝色背景
         color: #fff;
         padding: 40px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-around;
 
         .banner-content {
 
@@ -213,13 +213,25 @@ const togglePassword = () => {
                 .register {
                     float: right;
                     margin-bottom: 20px;
-
                 }
 
             }
         }
 
 
+
+    }
+
+    @media screen and (max-width: 500px) {
+        .login-banner {
+            display: none;
+        }
+
+        max-width: 100%; // 占满屏幕宽度（原 1200px 太宽）
+        min-height: calc(100vh - 400px); // 适配头部底部高度，避免溢出
+        margin: 0; // 减少上下边距，避免留白
+        padding: 0; // 容器不需要内边距，内边距给子元素
+        box-shadow: none; // 可选：小屏幕取消阴影，更简洁
     }
 }
 </style>
