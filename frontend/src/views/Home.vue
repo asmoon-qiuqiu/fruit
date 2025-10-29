@@ -20,7 +20,6 @@ const handleScroll = () => {
 
 }
 
-
 // 页面挂载时添加滚动监听
 onMounted(() => {
     window.addEventListener('scroll', handleScroll)
@@ -39,7 +38,7 @@ onUnmounted(() => {
 
     <!-- 轮播图 -->
     <div class="banner">
-        <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
+        <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000"
             data-bs-scroll="false">
             <div class="carousel-inner">
                 <!-- 轮播项图片替换 -->
@@ -66,10 +65,11 @@ onUnmounted(() => {
         </div>
     </div>
 
-    <h2>水果目录</h2>
+
     <!-- 内容 -->
     <div class="main">
         <div class="tab">
+            <h2>水果目录</h2>
             <button class="tablinks">苹果</button>
             <button class="tablinks">香蕉</button>
             <button class="tablinks">西瓜</button>
@@ -120,6 +120,27 @@ onUnmounted(() => {
                         </div>
                     </div>
                 </li>
+                <li class="list">
+                    <div class="fruit-card">
+                        <img src="https://picsum.photos/id/1065/300/200" alt="青苹果" class="fruit-img">
+                        <div class="fruit-info">
+                            <h3>青苹果</h3>
+                            <p>酸甜可口，富含膳食纤维，有助于消化。</p>
+                            <span class="price">¥7.5/斤</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list">
+                    <div class="fruit-card">
+                        <img src="https://picsum.photos/id/1065/300/200" alt="青苹果" class="fruit-img">
+                        <div class="fruit-info">
+                            <h3>青苹果</h3>
+                            <p>酸甜可口，富含膳食纤维，有助于消化。</p>
+                            <span class="price">¥7.5/斤</span>
+                        </div>
+                    </div>
+                </li>
+
             </ul>
         </div>
 
@@ -143,12 +164,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
-h2 {
-    color: #24f563;
-    margin: 20px 0;
-    padding-left: 10px;
-}
-
 .banner {
     height: 607px !important;
     overflow: hidden;
@@ -238,28 +253,35 @@ h2 {
     align-items: flex-start; // 顶部对齐
     padding-left: 10px;
     width: 100%;
-    aspect-ratio: 16/9;
+    background: url(../../public/images/preview1.jpg) no-repeat center;
+    background-size: cover;
+
+    h2 {
+        color: #C2185B;
+        margin: 20px 0;
+        padding-left: 5px;
+    }
 
     .tab {
         flex: 0 0 15%;
         border: 1px solid #e0f2e9;
-        background-color: #f0fdf4;
-        height: 250px;
+        background-color: #FFF0F5;
+        height: auto;
+        margin-top: 20px;
 
-        button {
+        .tablinks {
             display: block;
             background-color: #fff;
             color: #f97316;
             padding: 22px 16px;
             width: 100%;
             border: none;
-            outline: none;
             text-align: center;
-            cursor: pointer;
             transition: 0.3s;
             font-size: 17px;
             margin: 10px 0;
             border-radius: 6px;
+            cursor: pointer;
 
             &:hover {
                 background-color: #fff7ed;
@@ -276,6 +298,7 @@ h2 {
     .fruit-list {
         flex: 1;
         padding-left: 20px;
+        margin-top: 20px;
 
         ul {
             padding: 0;
@@ -320,6 +343,7 @@ h2 {
     .rside {
         flex: 0 0 300px; // 固定宽度，不缩放
         padding: 0 20px 0 20px;
+        margin-top: 20px;
 
         .search-container {
             background-color: #f0fdf4;
@@ -368,10 +392,11 @@ h2 {
     }
 
     @media screen and (max-width: 900px) {
+        padding: 0;
+
         .tab {
             flex: 0 0 100%;
             height: auto;
-            margin-bottom: 20px;
         }
 
         .tab button {
@@ -382,7 +407,6 @@ h2 {
 
         .rside {
             flex: 0 0 100%;
-            margin-top: 20px;
         }
 
         .fruit-list {
@@ -394,9 +418,11 @@ h2 {
         }
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 600px) {
+        padding: 0;
+
         .fruit-list {
-            padding-left: 0;
+            padding: 0;
 
             ul {
                 grid-template-columns: repeat(1, 1fr);
@@ -412,8 +438,6 @@ h2 {
 
             }
         }
-
-
     }
 }
 

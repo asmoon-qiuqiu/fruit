@@ -11,16 +11,16 @@
 
 <style scoped lang="scss">
 .footer {
-    background-color: #24f563;
+    background-color: #FFF0F5;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px 10px;
-    margin-top: 15px;
     opacity: 0.85;
     transition: opacity 0.3s ease;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
 
     &:hover {
         opacity: 1;
@@ -34,27 +34,27 @@
 
         /* 地址文字样式 */
         .footer-addr {
-            color: #2d3748;
+            color: #C2185B;
             font-size: 16px;
             margin-bottom: 10px;
         }
 
         /* 邮箱文字样式 */
         .footer-email {
-            color: #2d3748;
+            color: #C2185B;
             font-size: 16px;
             margin-bottom: 10px;
 
             /* 邮箱hover时变色，增加交互感 */
             &:hover {
-                color: #ffffff;
+                color: #8D6E63;
                 cursor: pointer;
             }
         }
 
         /* 版权信息样式 */
         .footer-copyright {
-            color: #4a5568;
+            color: #C2185B;
             /* 稍浅灰色，区分主次信息 */
             font-size: 14px;
             margin-top: 5px;
@@ -65,7 +65,6 @@
     /* 响应式适配：小屏幕下调整文字大小和内边距 */
     @media screen and (max-width: 600px) {
         padding: 25px 10px;
-        margin-top: 40px;
 
         .footer-content {
 

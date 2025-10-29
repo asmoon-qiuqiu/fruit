@@ -12,7 +12,7 @@
 
 <style scoped lang="scss">
 .header {
-    background-color: #24f563;
+    background-color: #FFF0F5;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -27,7 +27,7 @@
         font-size: 18px;
         padding: 15px;
         text-decoration: none;
-        color: #333;
+        color: #C2185B;
 
         .bi {
 
@@ -36,7 +36,7 @@
 
         &:hover,
         &:active {
-            background-color: #34ca61;
+            background-color: #C2185B;
             color: #F5F9FF;
         }
     }
