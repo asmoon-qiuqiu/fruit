@@ -20,7 +20,6 @@
     opacity: 0.85;
     transition: opacity 0.3s ease;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
-    margin-top: 10px;
 
     &:hover {
         opacity: 1;
@@ -62,9 +61,11 @@
         }
     }
 
+
+
     /* 响应式适配：小屏幕下调整文字大小和内边距 */
     @media screen and (max-width: 600px) {
-        padding: 25px 10px;
+
 
         .footer-content {
 

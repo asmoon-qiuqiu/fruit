@@ -13,7 +13,7 @@ const togglePassword = () => {
 </script>
 <template>
     <Header></Header>
-
+    <div class="bg"></div>
     <div class="login">
         <div class="login-banner">
             <div class="banner-content">
@@ -66,7 +66,6 @@ const togglePassword = () => {
                 <button type="submit" name="login">登录</button>
             </div>
         </form>
-
     </div>
 
     <Footer></Footer>
@@ -74,6 +73,17 @@ const togglePassword = () => {
 
 
 <style scoped lang="scss">
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url(../../public/images/preview.jpg) no-repeat center;
+    background-size: cover;
+}
+
 .login {
     display: flex; // 左右分栏
     min-height: calc(100vh - 276px);
@@ -101,7 +111,6 @@ const togglePassword = () => {
             p {
                 font-size: 14px;
                 line-height: 1.6;
-
             }
 
             .feature-item {
@@ -223,6 +232,7 @@ const togglePassword = () => {
     }
 
     @media screen and (max-width: 500px) {
+
         .login-banner {
             display: none;
         }

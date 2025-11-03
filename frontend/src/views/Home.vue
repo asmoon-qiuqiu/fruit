@@ -242,6 +242,8 @@ onUnmounted(() => {
         }
     }
 
+
+
     @media screen and (max-width: 600px) {
         display: none;
     }
@@ -252,9 +254,9 @@ onUnmounted(() => {
     flex-wrap: wrap;
     align-items: flex-start; // 顶部对齐
     padding-left: 10px;
-    width: 100%;
     background: url(../../public/images/preview1.jpg) no-repeat center;
     background-size: cover;
+
 
     h2 {
         color: #C2185B;
@@ -268,19 +270,21 @@ onUnmounted(() => {
         background-color: #FFF0F5;
         height: auto;
         margin-top: 20px;
+        padding: 0 5px;
+        opacity: 0.9;
 
         .tablinks {
             display: block;
             background-color: #fff;
             color: #f97316;
-            padding: 22px 16px;
+            padding: 20px 15px;
             width: 100%;
             border: none;
             text-align: center;
             transition: 0.3s;
             font-size: 17px;
             margin: 10px 0;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
 
             &:hover {
@@ -330,9 +334,9 @@ onUnmounted(() => {
 
                     .fruit-img {
                         width: 100%;
-                        height: 250px;
+                        height: auto;
                         object-fit: cover;
-                        border-radius: 4px;
+                        border-radius: 5px;
                     }
                 }
             }
@@ -386,16 +390,11 @@ onUnmounted(() => {
     }
 
     @media screen and (max-width: 1200px) {
-        .fruit-list ul {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media screen and (max-width: 900px) {
         padding: 0;
 
         .tab {
             flex: 0 0 100%;
+            margin-top: 0;
             height: auto;
         }
 
@@ -407,14 +406,17 @@ onUnmounted(() => {
 
         .rside {
             flex: 0 0 100%;
+            margin-bottom: 10px;
         }
 
         .fruit-list {
             padding: 10px;
 
             ul {
+                grid-template-columns: repeat(2, 1fr);
                 padding: 5px;
             }
+
         }
     }
 
