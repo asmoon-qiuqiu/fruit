@@ -6,6 +6,19 @@
             <p class="footer-copyright">© 2025 个人制作 版权所有</p>
         </div>
     </div>
+
+    <!-- 小屏幕底部导航 -->
+    <div class="mini-footer">
+        <router-link to="/" class="nav-item">
+            <i class="bi bi-house"></i>
+            <p>首页</p>
+        </router-link>
+
+        <router-link to="/my" class="nav-item">
+            <i class="bi bi-person-circle"></i>
+            <p>我的</p>
+        </router-link>
+    </div>
 </template>
 
 
@@ -60,24 +73,56 @@
             margin-bottom: -10px;
         }
     }
+}
 
+/* 响应式适配：小屏幕下调整文字大小和内边距 */
+@media screen and (max-width: 600px) {
+    .footer {
+        display: none;
+    }
 
+    .mini-footer {
+        background-color: #fff0f5;
+        position: fixed;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 900;
 
-    /* 响应式适配：小屏幕下调整文字大小和内边距 */
-    @media screen and (max-width: 600px) {
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            text-decoration: none;
 
-
-        .footer-content {
-
-            .footer-addr,
-            .footer-email {
-                font-size: 14px;
-            }
-
-            .footer-copyright {
-                font-size: 12px;
+            &.router-link-active {
+                color: #C2185B; // 激活时变色
             }
         }
+
+        .bi {
+            font-size: 24px;
+            margin-top: 4px;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+
+    }
+}
+
+
+@media screen and (min-width: 601px) {
+    .mini-footer {
+        display: none;
     }
 }
 </style>

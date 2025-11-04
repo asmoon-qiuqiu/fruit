@@ -22,9 +22,6 @@ const toggleMenu = () => {
 <template>
     <!-- 1. 小屏幕触发按钮（仅在≤600px显示） -->
     <div class="mini-header">
-        <router-link to="/">
-            <i class="bi bi-house"></i>
-        </router-link>
         <!-- 抽屉菜单按钮 -->
         <button class="menu-btn" @click="toggleMenu" v-show="!isMenuOpen">
             <i class="bi bi-list"></i>
@@ -49,7 +46,7 @@ const toggleMenu = () => {
             </div>
         </div>
     </div>
-
+    <div class="mini-footer"></div>
     <!-- 3. 大屏幕导航（原导航，≥601px显示） -->
     <div class="header">
         <router-link to="/">首页</router-link>
@@ -101,19 +98,18 @@ const toggleMenu = () => {
     .bi-house {
         color: #C2185B;
         font-size: 24px;
-        text-align: center;
+        padding-left: 5px;
     }
 
     .mini-header {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         position: relative; // 为侧边抽屉做定位参考
         background-color: #fff0f5;
 
         // 菜单按钮样式
         .menu-btn {
-            z-index: 999;
             border: none;
             font-size: 24px;
             color: #FFF0F5;
@@ -124,13 +120,13 @@ const toggleMenu = () => {
 
         // 关闭按钮样式
         .close-btn {
-            z-index: 999;
             border: none;
             font-size: 24px;
             color: #333;
             background-color: #fff0f5;
             padding: 5px;
             cursor: pointer;
+            z-index: 999;
         }
 
         // 打开菜单动画
@@ -158,10 +154,10 @@ const toggleMenu = () => {
         .mobile-menu {
             position: absolute;
             width: 200px;
-            height: 100vh;
-            z-index: 998;
+            height: calc(100vh - 61px);
             top: 0;
             right: 0; // 从右侧弹出
+            padding-bottom: 56px; // 留出底部导航的高度
             background-color: #FFF0F5;
             box-shadow: -20px 0 10px rgba(0, 0, 0, 0.1);
             //滑出动画
@@ -170,6 +166,7 @@ const toggleMenu = () => {
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
             transform: translateX(100%);
+            z-index: 998;
 
             &.open {
                 animation-name: openMenu;

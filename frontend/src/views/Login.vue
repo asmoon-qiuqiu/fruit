@@ -15,6 +15,7 @@ const togglePassword = () => {
     <Header></Header>
     <div class="bg"></div>
     <div class="login">
+
         <div class="login-banner">
             <div class="banner-content">
                 <h3>欢迎回来</h3>
@@ -90,7 +91,6 @@ const togglePassword = () => {
     overflow: hidden; // 避免内容溢出
     margin: 50px auto;
     max-width: 1200px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
     .login-banner {
         flex: 1; // 占比 50% 左右
@@ -231,17 +231,31 @@ const togglePassword = () => {
 
     }
 
-    @media screen and (max-width: 500px) {
+
+}
+
+@media screen and (max-width: 600px) {
+    .bg {
+        height: calc(100vh - 61px);
+    }
+
+    .login {
+        max-width: 100%; // 占满屏幕宽度
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .login-banner {
             display: none;
         }
 
-        max-width: 100%; // 占满屏幕宽度（原 1200px 太宽）
-        min-height: calc(100vh - 400px); // 适配头部底部高度，避免溢出
-        margin: 0; // 减少上下边距，避免留白
-        padding: 0; // 容器不需要内边距，内边距给子元素
-        box-shadow: none; // 可选：小屏幕取消阴影，更简洁
+        .login-form {
+            max-width: 400px;
+            margin: 0;
+            padding: 30px 20px;
+        }
     }
+
+
 }
 </style>
