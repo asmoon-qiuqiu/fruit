@@ -21,41 +21,54 @@ const toggleMenu = () => {
 </script>
 <template>
     <!-- 1. 小屏幕触发按钮（仅在≤600px显示） -->
-    <div class="mini-header">
-        <!-- 抽屉菜单按钮 -->
-        <button class="menu-btn" @click="toggleMenu" v-show="!isMenuOpen">
-            <i class="bi bi-list"></i>
-        </button>
+    <div class="mini-header-fixed">
+        <div class="mini-header">
+            <!-- 抽屉菜单按钮 -->
+            <button class="menu-btn" @click="toggleMenu" v-show="!isMenuOpen">
+                <i class="bi bi-list"></i>
+            </button>
 
-        <!-- 抽屉关闭按钮 -->
-        <button class="close-btn" @click="toggleMenu" v-show="isMenuOpen">
-            <i class="bi bi-x"></i>
-        </button>
+            <!-- 抽屉关闭按钮 -->
+            <button class="close-btn" @click="toggleMenu" v-show="isMenuOpen">
+                <i class="bi bi-x"></i>
+            </button>
 
-        <!-- 2. 小屏幕侧边抽屉（从右侧弹出，≤600px显示） -->
-        <div class="mobile-menu" :class="{ 'open': isMenuOpen, 'close': !isMenuOpen }" v-show="isMenuVisible">
-            <!-- 抽屉菜单内容 -->
-            <div class="menu-content">
-                <router-link to="/">首页</router-link>
-                <a href="#">水果种类</a>
-                <a href="#">关于我们</a>
-                <a href="#">联系我们</a>
-                <router-link to="login">
-                    <i class="bi bi-box-arrow-in-right"></i>登录
-                </router-link>
+            <!-- 2. 小屏幕侧边抽屉（从右侧弹出，≤600px显示） -->
+            <div class="mobile-menu" :class="{ 'open': isMenuOpen, 'close': !isMenuOpen }" v-show="isMenuVisible">
+                <!-- 抽屉菜单内容 -->
+                <div class="menu-content">
+                    <router-link to="/">首页</router-link>
+                    <a href="#">水果种类</a>
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <router-link to="login">
+                        <i class="bi bi-box-arrow-in-right"></i>登录
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="mini-footer"></div>
     <!-- 3. 大屏幕导航（原导航，≥601px显示） -->
     <div class="header">
+
         <router-link to="/">首页</router-link>
         <a href="#">水果种类</a>
         <a href="#">关于我们</a>
         <a href="#">联系我们</a>
         <router-link to="login">
-            <i class="bi bi-box-arrow-in-right"></i>登录
+            <i class="bi bi-box-arrow-in-right">登录</i>
         </router-link>
+
+        <div class="rside">
+            <div class="search-container">
+                <form action="#">
+                    <input type="text" placeholder="搜索.." name="search">
+                    <button type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -67,10 +80,6 @@ const toggleMenu = () => {
     justify-content: space-around;
     align-items: center;
     border-radius: 5px;
-
-    & :last-child {
-        font-style: italic;
-    }
 
     a {
         font-size: 18px;
@@ -88,6 +97,52 @@ const toggleMenu = () => {
             color: #F5F9FF;
         }
     }
+
+    // 搜索样式
+    .rside {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .search-container {
+            padding: 10px;
+            border-radius: 8px;
+
+            form {
+                display: flex;
+                align-items: center;
+
+                input[type="text"] {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px 0 0 4px;
+                    outline: none;
+                    font-size: 14px;
+                    color: #c2185b;
+                    max-width: 150px;
+                }
+
+                button {
+                    padding: 8px 12px;
+                    background-color: #c2185cde;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+
+                    &:hover {
+                        background-color: #c2185b;
+                    }
+
+                    i {
+                        font-size: 14px;
+                    }
+                }
+
+
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -95,122 +150,113 @@ const toggleMenu = () => {
         display: none;
     }
 
-    .bi-house {
-        color: #C2185B;
-        font-size: 24px;
-        padding-left: 5px;
-    }
+    .mini-header-fixed {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1000;
 
-    .mini-header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        position: relative; // 为侧边抽屉做定位参考
-        background-color: #fff0f5;
-
-        // 菜单按钮样式
-        .menu-btn {
-            border: none;
-            font-size: 24px;
-            color: #FFF0F5;
-            background-color: #C2185B;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        // 关闭按钮样式
-        .close-btn {
-            border: none;
-            font-size: 24px;
-            color: #333;
+        .mini-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative; // 为侧边抽屉做定位参考
             background-color: #fff0f5;
-            padding: 5px;
-            cursor: pointer;
-            z-index: 999;
-        }
 
-        // 打开菜单动画
-        @keyframes openMenu {
-            from {
-                transform: translateX(100%); //初始状态：完全在右侧外部 
+            // 菜单按钮样式
+            .menu-btn {
+                border: none;
+                font-size: 24px;
+                color: #FFF0F5;
+                background-color: #C2185B;
+                padding: 5px;
+                cursor: pointer;
             }
 
-            to {
-                transform: translateX(0); //结束状态：滑入到正常位置 
-            }
-        }
-
-        @keyframes closeMenu {
-            from {
-                transform: translateX(0); //初始状态：完全在右侧外部 
-            }
-
-            to {
-                transform: translateX(100%); //结束状态：滑入到正常位置 
-            }
-        }
-
-        // 侧边抽屉
-        .mobile-menu {
-            position: absolute;
-            width: 200px;
-            height: calc(100vh - 61px);
-            top: 0;
-            right: 0; // 从右侧弹出
-            padding-bottom: 56px; // 留出底部导航的高度
-            background-color: #FFF0F5;
-            box-shadow: -20px 0 10px rgba(0, 0, 0, 0.1);
-            //滑出动画
-            animation-duration: 0.3s;
-            animation-timing-function: ease;
-            animation-iteration-count: 1;
-            animation-fill-mode: forwards;
-            transform: translateX(100%);
-            z-index: 998;
-
-            &.open {
-                animation-name: openMenu;
-                // 打开后允许点击
-                pointer-events: auto;
+            // 关闭按钮样式
+            .close-btn {
+                border: none;
+                font-size: 24px;
+                color: #333;
+                background-color: #fff0f5;
+                padding: 5px;
+                cursor: pointer;
+                z-index: 999;
             }
 
-            &.close {
-                animation-name: closeMenu;
-                // 关闭后禁止点击（可选）
-                pointer-events: none;
-            }
-
-            // 抽屉菜单内容
-            .menu-content {
-                display: flex;
-                flex-direction: column;
-                padding: 50px 30px 0 0;
-
-
-                a {
-                    font-size: 18px;
-                    padding: 15px;
-                    text-decoration: none;
-                    color: #C2185B;
+            // 打开菜单动画
+            @keyframes openMenu {
+                from {
+                    transform: translateX(100%); //初始状态：完全在右侧外部 
                 }
 
-                a:hover,
-                a:active {
-                    background-color: #C2185B;
-                    color: white;
+                to {
+                    transform: translateX(0); //结束状态：滑入到正常位置 
+                }
+            }
+
+            @keyframes closeMenu {
+                from {
+                    transform: translateX(0); //初始状态：完全在右侧外部 
+                }
+
+                to {
+                    transform: translateX(100%); //结束状态：滑入到正常位置 
+                }
+            }
+
+            // 侧边抽屉
+            .mobile-menu {
+                position: absolute;
+                width: 200px;
+                height: calc(100vh - 61px);
+                top: 0;
+                right: 0; // 从右侧弹出
+                background-color: #FFF0F5;
+                box-shadow: -20px 0 10px rgba(0, 0, 0, 0.1);
+                //滑出动画
+                animation-duration: 0.3s;
+                animation-timing-function: ease;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                z-index: 998;
+
+                &.open {
+                    animation-name: openMenu;
+                    // 打开后允许点击
+                    pointer-events: auto;
+                }
+
+                &.close {
+                    animation-name: closeMenu;
+                    // 关闭后禁止点击（可选）
+                    pointer-events: none;
+                }
+
+                // 抽屉菜单内容
+                .menu-content {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 50px 30px 0 0;
+
+
+                    a {
+                        font-size: 18px;
+                        padding: 15px;
+                        text-decoration: none;
+                        color: #C2185B;
+                    }
+
+                    a:hover,
+                    a:active {
+                        background-color: #C2185B;
+                        color: white;
+                    }
                 }
             }
         }
     }
-
-    a {
-
-        &:hover,
-        &:active {
-            color: white;
-        }
-    }
-
 
 }
 

@@ -73,9 +73,13 @@ onUnmounted(() => {
             <button class="tablinks">苹果</button>
             <button class="tablinks">香蕉</button>
             <button class="tablinks">西瓜</button>
+            <button class="tablinks">西瓜</button>
+            <button class="tablinks">西瓜</button>
+            <button class="tablinks">西瓜</button>
         </div>
+
+        <!-- 水果列表 -->
         <div class="fruit-list">
-            <!-- 苹果列表 -->
             <ul>
                 <li class="list">
                     <div class="fruit-card">
@@ -142,15 +146,6 @@ onUnmounted(() => {
                 </li>
 
             </ul>
-        </div>
-
-        <div class="rside">
-            <div class="search-container">
-                <form action="#">
-                    <input type="text" placeholder="搜索.." name="search">
-                    <button type="submit"><i class="bi bi-search"></i></button>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -287,7 +282,7 @@ onUnmounted(() => {
             border: none;
             text-align: center;
             transition: 0.3s;
-            font-size: 17px;
+            font-size: 18px;
             margin: 10px 0;
             border-radius: 5px;
             cursor: pointer;
@@ -306,7 +301,8 @@ onUnmounted(() => {
 
     .fruit-list {
         flex: 1;
-        padding-left: 20px;
+        padding: 0 20px 20px 20px;
+
         margin-top: 20px;
 
         ul {
@@ -329,7 +325,7 @@ onUnmounted(() => {
 
                         h3 {
                             font-size: 20px;
-                            margin-top: 5px;
+                            margin-top: 10px;
                         }
 
                         p {
@@ -339,7 +335,7 @@ onUnmounted(() => {
 
                     .fruit-img {
                         width: 100%;
-                        height: auto;
+                        height: 250px;
                         object-fit: cover;
                         border-radius: 5px;
                     }
@@ -347,82 +343,6 @@ onUnmounted(() => {
             }
         }
 
-    }
-
-    .rside {
-        flex: 0 0 300px; // 固定宽度，不缩放
-        padding: 0 20px 0 20px;
-        margin-top: 20px;
-
-        .search-container {
-            background-color: #f0fdf4;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-            form {
-                display: flex;
-                align-items: center;
-
-                input[type="text"] {
-                    flex: 1;
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    border-radius: 4px 0 0 4px;
-                    outline: none;
-                    font-size: 14px;
-                }
-
-                button {
-                    padding: 8px 12px;
-                    background-color: #24f563;
-                    color: #333;
-                    border: none;
-                    border-radius: 0 4px 4px 0;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-
-                    &:hover {
-                        background-color: #34ca61;
-                    }
-
-                    i {
-                        font-size: 14px;
-                    }
-                }
-            }
-        }
-    }
-
-    @media screen and (max-width: 1200px) {
-        padding: 0;
-
-        .tab {
-            flex: 0 0 100%;
-            margin-top: 0;
-            height: auto;
-        }
-
-        .tab button {
-            display: inline-block;
-            width: auto;
-            margin: 10px;
-        }
-
-        .rside {
-            flex: 0 0 100%;
-            margin-bottom: 10px;
-        }
-
-        .fruit-list {
-            padding: 10px;
-
-            ul {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 5px;
-            }
-
-        }
     }
 
 }
@@ -493,22 +413,82 @@ onUnmounted(() => {
     }
 }
 
-@media screen and (max-width: 600px) {
+
+@media screen and (max-width: 1200px) {
     .main {
         padding: 0;
 
+        .tab {
+            display: flex;
+            flex: 0 0 100%;
+            flex-wrap: wrap;
+            margin-top: 0;
+
+
+            h2 {
+                width: 100%;
+                white-space: nowrap;
+                padding-left: 5px;
+                margin: 20px 0;
+            }
+
+            .tablinks {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 120px;
+                flex: 1 1 calc(25% - 10px);
+                height: 50px;
+                margin: 5px;
+            }
+        }
+
+
+
+        .rside {
+            flex: 0 0 100%;
+            margin-bottom: 10px;
+        }
+
         .fruit-list {
-            padding: 0;
+            padding: 10px;
 
             ul {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                padding: 5px;
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .main {
+        padding-top: 45px;
+
+        .fruit-list {
+            padding: 0;
+            margin-bottom: 50px;
+
+            ul {
+                grid-template-columns: repeat(2, 1fr);
 
                 .list .fruit-card {
+
                     .fruit-img {
                         width: 100%;
-                        height: 200px;
+                        height: auto;
                         object-fit: cover;
                         border-radius: 4px;
+                    }
+
+                    p {
+                        margin: 0;
+                        padding-bottom: 5px;
+                    }
+
+                    .price {
+                        padding-left: 2px;
                     }
                 }
 
@@ -522,7 +502,6 @@ onUnmounted(() => {
 
     /* 小屏幕下“返回顶部”按钮优化 */
     .back-to-top {
-        // 小屏幕下保持按钮显示（移除原 display: none）
         width: 40px;
         height: 40px;
         bottom: 10%;
@@ -533,9 +512,7 @@ onUnmounted(() => {
         }
 
         .text {
-            font-size: 12px;
-            padding: 3px 6px;
-            bottom: 30px; // 调整提示文本垂直位置
+            display: none
         }
 
     }
