@@ -1,26 +1,73 @@
 <script setup>
-import { ref } from 'vue';
-// 响应式变量：控制菜单显示/隐藏
-const isMenuOpen = ref(false); // 抽屉是否打开-默认关闭
-const isMenuVisible = ref(false);
+import { computed, ref } from 'vue'
+// 1.控制菜单显示|隐藏
+const isMenuOpen = ref(false) // 抽屉是否打开-默认关闭
+const isMenuVisible = ref(false) // 控制小屏幕抽屉菜单栏
 
 // 菜单和关闭按钮逻辑
 const toggleMenu = () => {
-    isMenuOpen.value = !isMenuOpen.value;
+    isMenuOpen.value = !isMenuOpen.value
     if (isMenuOpen.value) {
         // 打开时显示元素
-        isMenuVisible.value = true;
+        isMenuVisible.value = true
     } else {
         // 关闭时，等动画结束（300ms 对应动画时长）再隐藏
         setTimeout(() => {
-            isMenuVisible.value = false;
-        }, 300);
+            isMenuVisible.value = false
+        }, 300)
     }
-};
+}
 
+// 2.搜索框逻辑
+const searchQuery = ref("") // 输入值
+const showSuggestions = ref(false) // 控制是否显示建议框
+const isSearchActive = ref(false) // 控制搜索框是否展开
+const allSuggestions = [
+    '北方香蕉',
+    '南方香蕉',
+    '进口香蕉',
+    '有机香蕉',
+    '香蕉牛奶',
+    '香蕉干',
+    '苹果',
+    '桔子',
+    '芭乐',
+    '葡萄'
+] // 模拟本地数据-后续替换为接口
+
+// 计算属性：根据输入过滤建议
+const filterSuggestions = computed(() => {
+    if (!searchQuery.value.trim()) {
+        return []
+    } else {
+        return allSuggestions.filter(item => item.includes(searchQuery.value))
+    }
+})
+
+// 点击建议项
+const selectSuggestion = (item) => {
+    searchQuery.value = item
+    showSuggestions.value = false // 隐藏建议框
+    isSearchActive.value = true // 保持搜索框展开
+}
+// 处理input获得焦点时建议框和输入框展开
+const handleFocus = () => {
+    showSuggestions.value = true
+    isSearchActive.value = true
+}
+// 处理input失去焦点时建议框隐藏，输入框展开
+const handleBlur = () => {
+    setTimeout(() => {
+        showSuggestions.value = false
+        // 如果有搜索内容保持展开，否则收起
+        if (!searchQuery.value.trim()) {
+            isSearchActive.value = false
+        }
+    }, 200)
+}
 </script>
 <template>
-    <!-- 1. 小屏幕触发按钮（仅在≤600px显示） -->
+    <!-- 1. 小屏幕触发（仅在≤600px显示） -->
     <div class="mini-header-fixed">
         <div class="mini-header">
             <!-- 抽屉菜单按钮 -->
@@ -48,9 +95,10 @@ const toggleMenu = () => {
             </div>
         </div>
     </div>
-
+    <!-- 3. 小屏幕底部（仅在≤600px显示） -->
     <div class="mini-footer"></div>
-    <!-- 3. 大屏幕导航（原导航，≥601px显示） -->
+
+    <!-- 4. 大屏幕导航（原导航，≥601px显示） -->
     <div class="header">
 
         <router-link to="/">首页</router-link>
@@ -61,12 +109,25 @@ const toggleMenu = () => {
             <i class="bi bi-box-arrow-in-right">登录</i>
         </router-link>
 
-        <div class="rside">
+        <div class="search">
             <div class="search-container">
-                <form action="#">
-                    <input type="text" placeholder="搜索.." name="search">
-                    <button type="submit"><i class="bi bi-search"></i></button>
+                <form @submit.prevent action="#">
+                    <input class="search-input" :class="{ active: isSearchActive }" type="text" placeholder="搜索.."
+                        name="search" v-model="searchQuery" @focus="handleFocus" @input="showSuggestions = true"
+                        @blur="handleBlur" />
+
+                    <button type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+
                 </form>
+
+                <!-- 建议框 -->
+                <ul v-if="showSuggestions && filterSuggestions.length" class="suggestion-box">
+                    <li v-for="(item, index) in filterSuggestions" :key="index" @click="selectSuggestion(item)">
+                        {{ item }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -99,47 +160,81 @@ const toggleMenu = () => {
     }
 
     // 搜索样式
-    .rside {
-        position: relative;
-        display: flex;
-        align-items: center;
-
+    .search {
         .search-container {
-            padding: 10px;
-            border-radius: 8px;
+            position: relative;
+            display: inline-block;
 
-            form {
-                display: flex;
-                align-items: center;
+            // 建议框样式
+            .suggestion-box {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 0 0 6px 6px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                max-width: 200px;
+                max-height: 200px;
+                overflow: auto;
 
-                input[type="text"] {
+                li {
+                    list-style: none;
                     padding: 8px;
-                    border: 1px solid #ddd;
-                    border-radius: 4px 0 0 4px;
-                    outline: none;
-                    font-size: 14px;
-                    color: #c2185b;
-                    max-width: 150px;
-                }
-
-                button {
-                    padding: 8px 12px;
-                    background-color: #c2185cde;
-                    color: #fff;
-                    border: none;
+                    color: #de5b1a;
                     cursor: pointer;
-                    transition: background-color 0.3s;
-
-                    &:hover {
-                        background-color: #c2185b;
-                    }
-
-                    i {
-                        font-size: 14px;
-                    }
+                    transition: background 0.2s;
                 }
 
+                &:hover,
+                li:hover {
+                    background: #fff0f5;
+                    color: #C2185B;
+                }
+            }
 
+            // 默认隐藏input
+            .search-input {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px 0 0 4px;
+                outline: none;
+                font-size: 14px;
+                color: #c2185b;
+                max-width: 0;
+                opacity: 0;
+                transition: all 0.3s ease;
+
+                &.active {
+                    max-width: 150px;
+                    opacity: 1;
+                }
+            }
+
+            // 鼠标悬停或输入框获得焦点时 显示input
+            form:hover .search-input,
+            form:focus-within .search-input {
+                max-width: 150px;
+                opacity: 1;
+            }
+
+            button {
+                padding: 8px 12px;
+                background-color: #c2185cde;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #c2185b;
+                }
+
+                i {
+                    font-size: 14px;
+                }
             }
         }
     }
