@@ -1,28 +1,28 @@
 <script setup>
-import { computed, ref } from 'vue'
-// 1.控制菜单显示|隐藏
-const isMenuOpen = ref(false) // 抽屉是否打开-默认关闭
-const isMenuVisible = ref(false) // 控制小屏幕抽屉菜单栏
+  import { computed, ref } from 'vue'
+  // 1.控制菜单显示|隐藏
+  const isMenuOpen = ref(false) // 抽屉是否打开-默认关闭
+  const isMenuVisible = ref(false) // 控制小屏幕抽屉菜单栏
 
-// 菜单和关闭按钮逻辑
-const toggleMenu = () => {
+  // 菜单和关闭按钮逻辑
+  const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value
     if (isMenuOpen.value) {
-        // 打开时显示元素
-        isMenuVisible.value = true
+      // 打开时显示元素
+      isMenuVisible.value = true
     } else {
-        // 关闭时，等动画结束（300ms 对应动画时长）再隐藏
-        setTimeout(() => {
-            isMenuVisible.value = false
-        }, 300)
+      // 关闭时，等动画结束（300ms 对应动画时长）再隐藏
+      setTimeout(() => {
+        isMenuVisible.value = false
+      }, 300)
     }
-}
+  }
 
-// 2.搜索框逻辑
-const searchQuery = ref("") // 输入值
-const showSuggestions = ref(false) // 控制是否显示建议框
-const isSearchActive = ref(false) // 控制搜索框是否展开
-const allSuggestions = [
+  // 2.搜索框逻辑
+  const searchQuery = ref('') // 输入值
+  const showSuggestions = ref(false) // 控制是否显示建议框
+  const isSearchActive = ref(false) // 控制搜索框是否展开
+  const allSuggestions = [
     '北方香蕉',
     '南方香蕉',
     '进口香蕉',
@@ -32,110 +32,139 @@ const allSuggestions = [
     '苹果',
     '桔子',
     '芭乐',
-    '葡萄'
-] // 模拟本地数据-后续替换为接口
+    '葡萄',
+  ] // 模拟本地数据-后续替换为接口
 
-// 计算属性：根据输入过滤建议
-const filterSuggestions = computed(() => {
+  // 计算属性：根据输入过滤建议
+  const filterSuggestions = computed(() => {
     if (!searchQuery.value.trim()) {
-        return []
+      return []
     } else {
-        return allSuggestions.filter(item => item.includes(searchQuery.value))
+      return allSuggestions.filter((item) => item.includes(searchQuery.value))
     }
-})
+  })
 
-// 点击建议项
-const selectSuggestion = (item) => {
+  // 点击建议项
+  const selectSuggestion = (item) => {
     searchQuery.value = item
     showSuggestions.value = false // 隐藏建议框
     isSearchActive.value = true // 保持搜索框展开
-}
-// 处理input获得焦点时建议框和输入框展开
-const handleFocus = () => {
+  }
+  // 处理input获得焦点时建议框和输入框展开
+  const handleFocus = () => {
     showSuggestions.value = true
     isSearchActive.value = true
-}
-// 处理input失去焦点时建议框隐藏，输入框展开
-const handleBlur = () => {
+  }
+  // 处理input失去焦点时建议框隐藏，输入框展开
+  const handleBlur = () => {
     setTimeout(() => {
-        showSuggestions.value = false
-        // 如果有搜索内容保持展开，否则收起
-        if (!searchQuery.value.trim()) {
-            isSearchActive.value = false
-        }
+      showSuggestions.value = false
+      // 如果有搜索内容保持展开，否则收起
+      if (!searchQuery.value.trim()) {
+        isSearchActive.value = false
+      }
     }, 200)
-}
+  }
 </script>
 <template>
-    <!-- 1. 小屏幕触发（仅在≤600px显示） -->
-    <div class="mini-header-fixed">
-        <div class="mini-header">
-            <!-- 抽屉菜单按钮 -->
-            <button class="menu-btn" @click="toggleMenu" v-show="!isMenuOpen">
-                <i class="bi bi-list"></i>
-            </button>
+  <!-- 1. 小屏幕触发（仅在≤600px显示） -->
+  <div class="mini-header-fixed">
+    <div class="mini-header">
+      <!-- 抽屉菜单按钮 -->
+      <button
+        class="menu-btn"
+        @click="toggleMenu"
+        v-show="!isMenuOpen"
+      >
+        <i class="bi bi-list"></i>
+      </button>
 
-            <!-- 抽屉关闭按钮 -->
-            <button class="close-btn" @click="toggleMenu" v-show="isMenuOpen">
-                <i class="bi bi-x"></i>
-            </button>
+      <!-- 抽屉关闭按钮 -->
+      <button
+        class="close-btn"
+        @click="toggleMenu"
+        v-show="isMenuOpen"
+      >
+        <i class="bi bi-x"></i>
+      </button>
 
-            <!-- 2. 小屏幕侧边抽屉（从右侧弹出，≤600px显示） -->
-            <div class="mobile-menu" :class="{ 'open': isMenuOpen, 'close': !isMenuOpen }" v-show="isMenuVisible">
-                <!-- 抽屉菜单内容 -->
-                <div class="menu-content">
-                    <router-link to="/">首页</router-link>
-                    <a href="#">水果种类</a>
-                    <a href="#">关于我们</a>
-                    <a href="#">联系我们</a>
-                    <router-link to="login">
-                        <i class="bi bi-box-arrow-in-right"></i>登录
-                    </router-link>
-                </div>
-            </div>
+      <!-- 2. 小屏幕侧边抽屉（从右侧弹出，≤600px显示） -->
+      <div
+        class="mobile-menu"
+        :class="{ open: isMenuOpen, close: !isMenuOpen }"
+        v-show="isMenuVisible"
+      >
+        <!-- 抽屉菜单内容 -->
+        <div class="menu-content">
+          <router-link to="/">首页</router-link>
+          <a href="#">水果种类</a>
+          <a href="#">关于我们</a>
+          <a href="#">联系我们</a>
+          <router-link to="login">
+            <i class="bi bi-box-arrow-in-right"></i>
+            登录
+          </router-link>
         </div>
+      </div>
     </div>
-    <!-- 3. 小屏幕底部（仅在≤600px显示） -->
-    <div class="mini-footer"></div>
+  </div>
+  <!-- 3. 小屏幕底部（仅在≤600px显示） -->
+  <div class="mini-footer"></div>
 
-    <!-- 4. 大屏幕导航（原导航，≥601px显示） -->
-    <div class="header">
+  <!-- 4. 大屏幕导航（原导航，≥601px显示） -->
+  <div class="header">
+    <router-link to="/">首页</router-link>
+    <a href="#">水果种类</a>
+    <a href="#">关于我们</a>
+    <a href="#">联系我们</a>
+    <router-link to="login">
+      <i class="bi bi-box-arrow-in-right">登录</i>
+    </router-link>
 
-        <router-link to="/">首页</router-link>
-        <a href="#">水果种类</a>
-        <a href="#">关于我们</a>
-        <a href="#">联系我们</a>
-        <router-link to="login">
-            <i class="bi bi-box-arrow-in-right">登录</i>
-        </router-link>
+    <div class="search">
+      <div class="search-container">
+        <form
+          @submit.prevent
+          action="#"
+        >
+          <input
+            class="search-input"
+            :class="{ active: isSearchActive }"
+            type="text"
+            placeholder="搜索.."
+            name="search"
+            v-model="searchQuery"
+            @focus="handleFocus"
+            @input="showSuggestions = true"
+            @blur="handleBlur"
+          />
 
-        <div class="search">
-            <div class="search-container">
-                <form @submit.prevent action="#">
-                    <input class="search-input" :class="{ active: isSearchActive }" type="text" placeholder="搜索.."
-                        name="search" v-model="searchQuery" @focus="handleFocus" @input="showSuggestions = true"
-                        @blur="handleBlur" />
+          <button type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
 
-                    <button type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-
-                </form>
-
-                <!-- 建议框 -->
-                <ul v-if="showSuggestions && filterSuggestions.length" class="suggestion-box">
-                    <li v-for="(item, index) in filterSuggestions" :key="index" @click="selectSuggestion(item)">
-                        {{ item }}
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <!-- 建议框 -->
+        <ul
+          v-if="showSuggestions && filterSuggestions.length"
+          class="suggestion-box"
+        >
+          <li
+            v-for="(item, index) in filterSuggestions"
+            :key="index"
+            @click="selectSuggestion(item)"
+          >
+            {{ item }}
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.header {
-    background-color: #FFF0F5;
+  .header {
+    background-color: #fff0f5;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -143,222 +172,220 @@ const handleBlur = () => {
     border-radius: 5px;
 
     a {
-        font-size: 18px;
-        padding: 15px;
-        text-decoration: none;
-        color: #C2185B;
+      font-size: 18px;
+      padding: 15px;
+      text-decoration: none;
+      color: #c2185b;
 
-        .bi {
-            margin-right: 5px;
-        }
+      .bi {
+        margin-right: 5px;
+      }
 
-        &:hover,
-        &:active {
-            background-color: #C2185B;
-            color: #F5F9FF;
-        }
+      &:hover,
+      &:active {
+        background-color: #c2185b;
+        color: #f5f9ff;
+      }
     }
 
     // 搜索样式
     .search {
-        .search-container {
-            position: relative;
-            display: inline-block;
+      .search-container {
+        position: relative;
+        display: inline-block;
 
-            // 建议框样式
-            .suggestion-box {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #fff;
-                border: 1px solid #ddd;
-                border-radius: 0 0 6px 6px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                z-index: 999;
-                max-width: 200px;
-                max-height: 200px;
-                overflow: auto;
+        // 建议框样式
+        .suggestion-box {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 0 0 6px 6px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          z-index: 999;
+          max-width: 200px;
+          max-height: 200px;
+          overflow: auto;
 
-                li {
-                    list-style: none;
-                    padding: 8px;
-                    color: #de5b1a;
-                    cursor: pointer;
-                    transition: background 0.2s;
-                }
+          li {
+            list-style: none;
+            padding: 8px;
+            color: #de5b1a;
+            cursor: pointer;
+            transition: background 0.2s;
+          }
 
-                &:hover,
-                li:hover {
-                    background: #fff0f5;
-                    color: #C2185B;
-                }
-            }
-
-            // 默认隐藏input
-            .search-input {
-                padding: 8px;
-                border: 1px solid #ddd;
-                border-radius: 4px 0 0 4px;
-                outline: none;
-                font-size: 14px;
-                color: #c2185b;
-                max-width: 0;
-                opacity: 0;
-                transition: all 0.3s ease;
-
-                &.active {
-                    max-width: 150px;
-                    opacity: 1;
-                }
-            }
-
-            // 鼠标悬停或输入框获得焦点时 显示input
-            form:hover .search-input,
-            form:focus-within .search-input {
-                max-width: 150px;
-                opacity: 1;
-            }
-
-            button {
-                padding: 8px 12px;
-                background-color: #c2185cde;
-                color: #fff;
-                border: none;
-                cursor: pointer;
-                transition: background-color 0.3s;
-
-                &:hover {
-                    background-color: #c2185b;
-                }
-
-                i {
-                    font-size: 14px;
-                }
-            }
+          &:hover,
+          li:hover {
+            background: #fff0f5;
+            color: #c2185b;
+          }
         }
-    }
-}
 
-@media screen and (max-width: 600px) {
+        // 默认隐藏input
+        .search-input {
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 4px 0 0 4px;
+          outline: none;
+          font-size: 14px;
+          color: #c2185b;
+          max-width: 0;
+          opacity: 0;
+          transition: all 0.3s ease;
+
+          &.active {
+            max-width: 150px;
+            opacity: 1;
+          }
+        }
+
+        // 鼠标悬停或输入框获得焦点时 显示input
+        form:hover .search-input,
+        form:focus-within .search-input {
+          max-width: 150px;
+          opacity: 1;
+        }
+
+        button {
+          padding: 8px 12px;
+          background-color: #c2185cde;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #c2185b;
+          }
+
+          i {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
     .header {
-        display: none;
+      display: none;
     }
 
     .mini-header-fixed {
-        position: fixed;
-        width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 1000;
+      position: fixed;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1000;
 
-        .mini-header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            position: relative; // 为侧边抽屉做定位参考
-            background-color: #fff0f5;
+      .mini-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        position: relative; // 为侧边抽屉做定位参考
+        background-color: #fff0f5;
 
-            // 菜单按钮样式
-            .menu-btn {
-                border: none;
-                font-size: 24px;
-                color: #FFF0F5;
-                background-color: #C2185B;
-                padding: 5px;
-                cursor: pointer;
-            }
-
-            // 关闭按钮样式
-            .close-btn {
-                border: none;
-                font-size: 24px;
-                color: #333;
-                background-color: #fff0f5;
-                padding: 5px;
-                cursor: pointer;
-                z-index: 999;
-            }
-
-            // 打开菜单动画
-            @keyframes openMenu {
-                from {
-                    transform: translateX(100%); //初始状态：完全在右侧外部 
-                }
-
-                to {
-                    transform: translateX(0); //结束状态：滑入到正常位置 
-                }
-            }
-
-            @keyframes closeMenu {
-                from {
-                    transform: translateX(0); //初始状态：完全在右侧外部 
-                }
-
-                to {
-                    transform: translateX(100%); //结束状态：滑入到正常位置 
-                }
-            }
-
-            // 侧边抽屉
-            .mobile-menu {
-                position: absolute;
-                width: 200px;
-                height: calc(100vh - 61px);
-                top: 0;
-                right: 0; // 从右侧弹出
-                background-color: #FFF0F5;
-                box-shadow: -20px 0 10px rgba(0, 0, 0, 0.1);
-                //滑出动画
-                animation-duration: 0.3s;
-                animation-timing-function: ease;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-                z-index: 998;
-
-                &.open {
-                    animation-name: openMenu;
-                    // 打开后允许点击
-                    pointer-events: auto;
-                }
-
-                &.close {
-                    animation-name: closeMenu;
-                    // 关闭后禁止点击（可选）
-                    pointer-events: none;
-                }
-
-                // 抽屉菜单内容
-                .menu-content {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 50px 30px 0 0;
-
-
-                    a {
-                        font-size: 18px;
-                        padding: 15px;
-                        text-decoration: none;
-                        color: #C2185B;
-                    }
-
-                    a:hover,
-                    a:active {
-                        background-color: #C2185B;
-                        color: white;
-                    }
-                }
-            }
+        // 菜单按钮样式
+        .menu-btn {
+          border: none;
+          font-size: 24px;
+          color: #fff0f5;
+          background-color: #c2185b;
+          padding: 5px;
+          cursor: pointer;
         }
+
+        // 关闭按钮样式
+        .close-btn {
+          border: none;
+          font-size: 24px;
+          color: #333;
+          background-color: #fff0f5;
+          padding: 5px;
+          cursor: pointer;
+          z-index: 999;
+        }
+
+        // 打开菜单动画
+        @keyframes openMenu {
+          from {
+            transform: translateX(100%); //初始状态：完全在右侧外部
+          }
+
+          to {
+            transform: translateX(0); //结束状态：滑入到正常位置
+          }
+        }
+
+        @keyframes closeMenu {
+          from {
+            transform: translateX(0); //初始状态：完全在右侧外部
+          }
+
+          to {
+            transform: translateX(100%); //结束状态：滑入到正常位置
+          }
+        }
+
+        // 侧边抽屉
+        .mobile-menu {
+          position: absolute;
+          width: 200px;
+          height: calc(100vh - 61px);
+          top: 0;
+          right: 0; // 从右侧弹出
+          background-color: #fff0f5;
+          box-shadow: -20px 0 10px rgba(0, 0, 0, 0.1);
+          //滑出动画
+          animation-duration: 0.3s;
+          animation-timing-function: ease;
+          animation-iteration-count: 1;
+          animation-fill-mode: forwards;
+          z-index: 998;
+
+          &.open {
+            animation-name: openMenu;
+            // 打开后允许点击
+            pointer-events: auto;
+          }
+
+          &.close {
+            animation-name: closeMenu;
+            // 关闭后禁止点击（可选）
+            pointer-events: none;
+          }
+
+          // 抽屉菜单内容
+          .menu-content {
+            display: flex;
+            flex-direction: column;
+            padding: 50px 30px 0 0;
+
+            a {
+              font-size: 18px;
+              padding: 15px;
+              text-decoration: none;
+              color: #c2185b;
+            }
+
+            a:hover,
+            a:active {
+              background-color: #c2185b;
+              color: white;
+            }
+          }
+        }
+      }
     }
+  }
 
-}
-
-// 大屏幕隐藏小屏幕菜单容器
-@media screen and (min-width: 601px) {
+  // 大屏幕隐藏小屏幕菜单容器
+  @media screen and (min-width: 601px) {
     .mini-header {
-        display: none;
+      display: none;
     }
-}
+  }
 </style>
