@@ -437,12 +437,15 @@ const pageNumbers = computed(() => {
       <ul>
         <li class="list" v-for="fruit in paginatedFruits" :key="fruit.id">
           <div class="fruit-card">
+
             <img :src="fruit.image" :alt="fruit.name" class="fruit-img" />
+
             <div class="fruit-info">
               <h3>{{ fruit.name }}</h3>
               <p>{{ fruit.desc }}</p>
               <span class="price">¥{{ fruit.price }}/斤</span>
             </div>
+
           </div>
         </li>
       </ul>
@@ -716,7 +719,7 @@ const pageNumbers = computed(() => {
       gap: 5px;
       margin-left: 15px;
       font-size: 14px;
-      color: #666;
+      color: #c2185b;
 
       input {
         width: 40px;
@@ -860,8 +863,13 @@ const pageNumbers = computed(() => {
 
       ul {
         grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 0;
+        margin: 0;
 
         .list .fruit-card {
+          margin: 0 5px 0 5px;
+
           .fruit-img {
             width: 100%;
             height: auto;
@@ -869,15 +877,43 @@ const pageNumbers = computed(() => {
             border-radius: 4px;
           }
 
-          p {
-            margin: 0;
-            padding-bottom: 5px;
-          }
+          .fruit-info {
+            h3 {
+              font-size: 14px;
+              font-weight: bold;
+            }
 
-          .price {
-            padding-left: 2px;
+            p {
+              font-size: 12px;
+              font-weight: bold;
+            }
+
+            .price {
+              font-size: 12px;
+              padding-left: 2px;
+              font-weight: bold;
+            }
           }
         }
+      }
+    }
+
+    // 分页
+    .pagination {
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      .page-btn,
+      .page-number {
+        min-width: 30px;
+        height: 30px;
+        font-size: 12px;
+      }
+
+      .page-jump {
+        font-size: 12px;
+        margin-left: 5px;
       }
     }
 
@@ -886,15 +922,17 @@ const pageNumbers = computed(() => {
     }
   }
 
+
+
   /* 小屏幕下“返回顶部”按钮优化 */
   .back-to-top {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     bottom: 10%;
     right: 20px;
 
     .bi {
-      font-size: 18px;
+      font-size: 12px;
     }
 
     .text {
