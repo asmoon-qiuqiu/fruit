@@ -66,6 +66,7 @@
     }, 200)
   }
 </script>
+
 <template>
   <!-- 1. 小屏幕触发（仅在≤600px显示） -->
   <div class="mini-header-fixed">
@@ -114,8 +115,8 @@
   <!-- 4. 大屏幕导航（原导航，≥601px显示） -->
   <div class="header">
     <router-link to="/">首页</router-link>
+    <router-link to="about">关于我们</router-link>
     <a href="#">水果种类</a>
-    <a href="#">关于我们</a>
     <a href="#">联系我们</a>
     <router-link to="login">
       <i class="bi bi-box-arrow-in-right">登录</i>
