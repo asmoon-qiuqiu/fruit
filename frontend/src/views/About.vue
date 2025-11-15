@@ -6,38 +6,60 @@
       <h3>此站说明</h3>
       <div class="about-explanation">
         <p>
-          此站为个人
+          此站是由个人
           <span class="user">
             (asmoon)
             <i class="bi bi-emoji-smile"></i>
           </span>
-          独自开发维护的项目，旨在为用户提供第一时间的水果资讯和优质的水果购买体验。希望你们能够喜欢这个网站，并提供宝贵的反馈意见，让我们一起把它做得更好！
+          独自开发维护的水果主题小站哦~旨在为用户提供第一时间的水果资讯和优质的水果购买体验。希望你们能够喜欢这个网站，并提供宝贵的反馈意见，让我们一起把它做得更好！
           <img
             class="manbo"
             src="../../public/images/manbo2.gif"
             alt="曼波"
           />
         </p>
-        <p>此外,此网站已在GitHub开源，欢迎大家前往查看代码，提出建议或贡献代码。</p>
+        <p>
+          此外，此网站已在 GitHub 开源，欢迎大家前往查看代码。若遇到 BUG，可前往 GitHub
+          反馈，也可提出建议或贡献代码。
+        </p>
         <p>祝大家预览愉快！</p>
       </div>
 
       <div class="about-github">
-        <h3>链接如下：</h3>
+        <h3>
+          速戳链接
+          <span>👇</span>
+        </h3>
         <a
+          class="github-link"
           href="https://github.com/asmoon-qiuqiu"
-          class="github-link"
           target="_blank"
         >
-          <p>GitHub：https://github.com/asmoon-qiuqiu</p>
+          <p>- GitHub 个人主页：https://github.com/asmoon-qiuqiu</p>
         </a>
         <a
-          href="https://github.com/asmoon-qiuqiu/FruitSync"
           class="github-link"
+          href="https://github.com/asmoon-qiuqiu/FruitSync"
           target="_blank"
         >
-          <p>项目仓库:https://github.com/asmoon-qiuqiu/FruitSync</p>
+          <p>- 项目仓库:https://github.com/asmoon-qiuqiu/FruitSync</p>
         </a>
+        （点击链接即可跳转）
+      </div>
+
+      <div class="about-contact">
+        <h3>联系方式</h3>
+        <p>
+          欢迎唠嗑~~~ 要是有特别的想法想单独聊，直接去 GitHub 私信 asmoon
+          就好啦，看到都会回复的~当然也可以通过如下方式👇
+        </p>
+
+        <button
+          class="contact"
+          @click="$router.push('/contact')"
+        >
+          <span class="contact-text">联系方式</span>
+        </button>
       </div>
     </div>
   </div>
@@ -70,6 +92,9 @@
       h4 {
         margin-top: 10px;
         color: $minor-color;
+        span {
+          font-size: 20px;
+        }
       }
 
       .about-explanation {
@@ -90,13 +115,43 @@
 
       .about-github {
         .github-link {
-          color: $minor-color;
+          color: $primary-color;
           font-size: 18px;
           text-decoration: none;
-
           &:hover {
-            color: #8d6e63;
+            color: $minor-color;
+            cursor: pointer;
           }
+        }
+      }
+      .about-contact {
+        .contact {
+          // 定义动画关键帧
+          @keyframes changeText {
+            0% {
+              color: #ffb7b2;
+            }
+            50% {
+              color: #ffb74d;
+            }
+            100% {
+              color: $primary-color;
+            }
+          }
+          &-text {
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            animation: changeText 3s ease-in-out infinite;
+          }
+          border: none;
+          padding: 20px;
+          margin: 10px auto;
+          display: block; // 确保按钮是块级元素，margin生效
+          background-color: $minor-color;
+          color: #ffb7b2;
+          border-radius: 8px;
+          cursor: pointer;
         }
       }
     }
