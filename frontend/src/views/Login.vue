@@ -1,6 +1,4 @@
 <script setup>
-  import Footer from '@/components/Footer.vue'
-  import Header from '@/components/Header.vue'
   import { ref } from 'vue'
 
   // 控制密码框显示
@@ -12,7 +10,6 @@
   }
 </script>
 <template>
-  <Header></Header>
   <div class="bg"></div>
   <div class="login">
     <div class="login-banner">
@@ -97,8 +94,6 @@
       </div>
     </form>
   </div>
-
-  <Footer></Footer>
 </template>
 
 <style scoped lang="scss">
@@ -109,7 +104,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: url(../../public/images/preview.jpg) no-repeat center;
+    background: url(../../public/images/login.jpg) no-repeat center;
     background-size: cover;
   }
 

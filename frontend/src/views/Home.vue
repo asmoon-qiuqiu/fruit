@@ -1,7 +1,5 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
-  import Header from '@/components/Header.vue'
-  import Footer from '@/components/Footer.vue'
   import MainFruits from '@/components/MainFruits.vue'
   // 1.控制返回顶部按钮显示/隐藏的状态（默认隐藏）
   const showBackTop = ref(false)
@@ -32,9 +30,6 @@
 </script>
 
 <template>
-  <!-- 头部导航 -->
-  <Header></Header>
-
   <!-- 轮播图 -->
   <div class="banner">
     <div
@@ -55,7 +50,7 @@
         </div>
         <div class="carousel-item">
           <img
-            src="../../public/images/fruit-image1.png"
+            src="../../public/images/about.jpg"
             class="d-block w-100"
             alt="水果轮播图2"
           />
@@ -97,9 +92,6 @@
 
   <!-- 内容 -->
   <MainFruits></MainFruits>
-
-  <!-- 底部 -->
-  <Footer></Footer>
 
   <!-- 返回顶部按钮：默认隐藏，滚动到指定高度显示 -->
   <button
