@@ -45,6 +45,11 @@
           <p>- 项目仓库:https://github.com/asmoon-qiuqiu/FruitSync</p>
         </a>
         （点击链接即可跳转）
+
+        <img
+          src="../../public/images/contact.gif"
+          alt="唠嗑~"
+        />
       </div>
 
       <div class="about-contact">
@@ -88,8 +93,7 @@
       top: 50%;
       transform: translateY(-50%);
 
-      h3,
-      h4 {
+      h3 {
         margin-top: 10px;
         color: $minor-color;
         span {
@@ -109,11 +113,17 @@
           border-radius: 50px;
           width: 100px;
           height: 100px;
-          margin-right: 10px;
+          margin-right: 30px;
+          margin-top: 20px;
         }
       }
 
       .about-github {
+        img {
+          float: right;
+          width: 150px;
+          height: 150px;
+        }
         .github-link {
           color: $primary-color;
           font-size: 18px;
@@ -126,6 +136,14 @@
       }
       .about-contact {
         .contact {
+          border: none;
+          padding: 20px;
+          margin: 0 auto;
+          display: block; // 确保按钮是块级元素，margin生效
+          background-color: $minor-color;
+          color: #ffb7b2;
+          border-radius: 8px;
+          cursor: pointer;
           // 定义动画关键帧
           @keyframes changeText {
             0% {
@@ -144,14 +162,6 @@
             text-decoration: none;
             animation: changeText 3s ease-in-out infinite;
           }
-          border: none;
-          padding: 20px;
-          margin: 10px auto;
-          display: block; // 确保按钮是块级元素，margin生效
-          background-color: $minor-color;
-          color: #ffb7b2;
-          border-radius: 8px;
-          cursor: pointer;
         }
       }
     }
