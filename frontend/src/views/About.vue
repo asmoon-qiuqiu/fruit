@@ -30,21 +30,27 @@
           速戳链接
           <span>👇</span>
         </h3>
-        <a
-          class="github-link"
-          href="https://github.com/asmoon-qiuqiu"
-          target="_blank"
-        >
-          <p>- GitHub 个人主页：https://github.com/asmoon-qiuqiu</p>
-        </a>
-        <a
-          class="github-link"
-          href="https://github.com/asmoon-qiuqiu/FruitSync"
-          target="_blank"
-        >
-          <p>- 项目仓库:https://github.com/asmoon-qiuqiu/FruitSync</p>
-        </a>
-        （点击链接即可跳转）
+        <p>
+          - GitHub 个人主页：
+          <a
+            class="github-link"
+            href="https://github.com/asmoon-qiuqiu"
+            target="_blank"
+          >
+            https://github.com/asmoon-qiuqiu
+          </a>
+        </p>
+        <p>
+          - 项目仓库:
+          <a
+            class="github-link"
+            href="https://github.com/asmoon-qiuqiu/FruitSync"
+            target="_blank"
+          >
+            https://github.com/asmoon-qiuqiu/FruitSync
+          </a>
+        </p>
+        <span>（点击链接即可跳转）</span>
 
         <img
           src="../../public/images/contact.gif"
