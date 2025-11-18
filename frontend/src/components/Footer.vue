@@ -81,7 +81,7 @@
   }
 
   /* 响应式适配：小屏幕下调整文字大小和内边距 */
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     .footer {
       display: none;
     }
@@ -96,7 +96,6 @@
       bottom: 0;
       width: 100%;
       z-index: 900;
-
       .nav-item {
         display: flex;
         flex-direction: column;
@@ -122,7 +121,7 @@
     }
   }
 
-  @media screen and (min-width: 601px) {
+  @media screen and (min-width: 769px) {
     .mini-footer {
       display: none;
     }

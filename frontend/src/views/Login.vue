@@ -104,7 +104,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: url(../../public/images/login.jpg) no-repeat center;
+    background: url('@public/images/login.jpg') no-repeat center;
     background-size: cover;
   }
 
@@ -247,7 +247,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     .bg {
       height: calc(100vh - 61px);
     }

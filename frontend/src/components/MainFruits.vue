@@ -666,7 +666,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     .main {
       padding-top: 45px;
 

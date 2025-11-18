@@ -255,7 +255,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     /* 小屏幕下“返回顶部”按钮优化 */
     .back-to-top {
       width: 30px;

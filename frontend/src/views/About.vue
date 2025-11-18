@@ -18,10 +18,19 @@
             alt="曼波"
           />
         </p>
+
         <p>
           此外，此网站已在 GitHub 开源，欢迎大家前往查看代码。若遇到 BUG，可前往 GitHub
-          反馈，也可提出建议或贡献代码。
+          反馈或贡献代码，也可跟我
+          <span
+            class="myself"
+            @click="$router.push('/contact')"
+          >
+            个人联系
+          </span>
+          提出建议。
         </p>
+
         <p>祝大家预览愉快！</p>
       </div>
 
@@ -31,17 +40,17 @@
           <span>👇</span>
         </h3>
         <p>
-          - GitHub 个人主页：
+          - 码云项目仓库：
           <a
             class="github-link"
-            href="https://github.com/asmoon-qiuqiu"
+            href="https://gitee.com/qiuqiumoon/FruitSync"
             target="_blank"
           >
-            https://github.com/asmoon-qiuqiu
+            https://gitee.com/qiuqiumoon/FruitSync
           </a>
         </p>
         <p>
-          - 项目仓库:
+          - GitHub项目仓库:
           <a
             class="github-link"
             href="https://github.com/asmoon-qiuqiu/FruitSync"
@@ -66,7 +75,7 @@
         </p>
 
         <button
-          class="contact"
+          class="contact-btn"
           @click="$router.push('/contact')"
         >
           <span class="contact-text">联系方式</span>
@@ -82,23 +91,20 @@
 
   .about {
     min-height: calc(100vh - 176px);
-    background: url(../../public/images/about.jpg) no-repeat center;
+    background: url('@public/images/about.jpg') no-repeat center;
     background-size: cover;
     background-attachment: fixed;
     padding: 10px;
-    position: relative;
-
+    background-color: $minor-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap; // 子元素垂直排列并在需要时换行
     .about-content {
       background: rgba(255, 240, 245, 0.3);
-      position: absolute;
       width: 80%;
       padding: 10px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      top: 50%;
-      transform: translateY(-50%);
-
+      overflow: auto;
       h3 {
         margin-top: 10px;
         color: $minor-color;
@@ -112,7 +118,12 @@
           color: $primary-color;
           font-weight: bold;
         }
-
+        .myself {
+          color: $minor-color;
+          font-weight: bold;
+          text-decoration: underline solid;
+          cursor: pointer;
+        }
         .manbo {
           float: right;
           border: 1px solid #b0938d;
@@ -141,9 +152,9 @@
         }
       }
       .about-contact {
-        .contact {
+        .contact-btn {
           border: none;
-          padding: 20px;
+          padding: 15px;
           margin: 0 auto;
           display: block; // 确保按钮是块级元素，margin生效
           background-color: $minor-color;
@@ -167,6 +178,45 @@
             font-weight: bold;
             text-decoration: none;
             animation: changeText 3s ease-in-out infinite;
+          }
+          &:hover {
+            background-color: #d83a6e;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .about {
+      min-height: calc(100vh - 61px);
+      padding: 0;
+
+      p {
+        margin: 0;
+      }
+      .about-content {
+        margin: 70px 0;
+        .about-explanation {
+          .manbo {
+            width: 100px;
+            height: 100px;
+            margin: 0;
+          }
+        }
+        .about-github {
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+        .about-contact {
+          .contact-btn {
+            margin-top: 10px;
+            padding: 10px;
+            .contact-text {
+              font-size: 14px;
+            }
           }
         }
       }

@@ -268,7 +268,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     .header {
       display: none;
     }
@@ -382,7 +382,7 @@
   }
 
   // 大屏幕隐藏小屏幕菜单容器
-  @media screen and (min-width: 601px) {
+  @media screen and (min-width: 769px) {
     .mini-header {
       display: none;
     }
