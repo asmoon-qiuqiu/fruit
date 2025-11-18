@@ -190,13 +190,11 @@
   @media screen and (max-width: 768px) {
     .about {
       min-height: calc(100vh - 61px);
-      padding: 0;
-
+      padding: 65px 0; // 留出高度，避免内容被遮挡/
       p {
         margin: 0;
       }
       .about-content {
-        margin: 70px 0;
         .about-explanation {
           .manbo {
             width: 100px;

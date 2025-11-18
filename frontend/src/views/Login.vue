@@ -253,11 +253,11 @@
     }
 
     .login {
-      max-width: 100%; // 占满屏幕宽度
+      max-width: 90%; // 占满屏幕宽度
       display: flex;
       justify-content: center;
       align-items: center;
-
+      padding: 65px 0;
       .login-banner {
         display: none;
       }

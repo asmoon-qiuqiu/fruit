@@ -95,7 +95,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      z-index: 900;
+      z-index: 1001;
       .nav-item {
         display: flex;
         flex-direction: column;

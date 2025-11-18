@@ -70,4 +70,39 @@
       }
     }
   }
+  // 原样式保持不变，新增以下媒体查询
+  @media screen and (max-width: 768px) {
+    .contact {
+      // 移动端调整最小高度（适配不同导航栏高度）
+      min-height: calc(100vh - 61px);
+      padding: 65px 0; // 留出高度，避免内容被遮挡
+      .contact-mask {
+        width: 90%;
+        margin: 10px 0;
+        padding: 10px 0;
+        .contact-content {
+          padding: 8px; // 减少内容区内边距
+
+          h4 {
+            font-size: 18px;
+
+            h6 {
+              font-size: 14px;
+            }
+
+            p {
+              font-size: 13px;
+              line-height: 1.6;
+              margin: 0;
+            }
+
+            img {
+              width: 150px;
+              height: 150px;
+            }
+          }
+        }
+      }
+    }
+  }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
   import { computed, ref } from 'vue'
-  // 1.控制菜单显示|隐藏
+  // 1.小屏幕控制菜单显示|隐藏
   const isMenuOpen = ref(false) // 抽屉是否打开-默认关闭
   const isMenuVisible = ref(false) // 控制小屏幕抽屉菜单栏
 
@@ -97,11 +97,34 @@
       >
         <!-- 抽屉菜单内容 -->
         <div class="menu-content">
-          <router-link to="/">首页</router-link>
-          <a href="#">水果种类</a>
-          <router-link to="about">关于此站</router-link>
-          <router-link to="contact">联系方式</router-link>
-          <router-link to="login">
+          <router-link
+            to="/"
+            @click="toggleMenu"
+          >
+            首页
+          </router-link>
+          <a
+            href="#"
+            @click="toggleMenu"
+          >
+            水果种类
+          </a>
+          <router-link
+            to="about"
+            @click="toggleMenu"
+          >
+            关于此站
+          </router-link>
+          <router-link
+            to="contact"
+            @click="toggleMenu"
+          >
+            联系方式
+          </router-link>
+          <router-link
+            to="login"
+            @click="toggleMenu"
+          >
             <i class="bi bi-box-arrow-in-right"></i>
             登录
           </router-link>
@@ -278,15 +301,13 @@
       width: 100%;
       left: 0;
       top: 0;
-      z-index: 1000;
-
+      z-index: 1001;
       .mini-header {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         position: relative; // 为侧边抽屉做定位参考
         background-color: #fff0f5;
-
         // 菜单按钮样式
         .menu-btn {
           border: none;

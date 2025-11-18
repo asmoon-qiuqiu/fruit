@@ -7,9 +7,6 @@
   const zoom = ref(17)
   const visible = ref(true)
 
-  const switchInfoWindow = () => {
-    visible.value = !visible.value
-  }
   // 定义信息窗口内容(带样式的HTML字符串)
   const content = ref(`
     <div style="
@@ -20,11 +17,11 @@
       惠东县黄埠镇综合第二市场
     </div>
   `)
-  // // 地图加载完成后，可以获取地图实例、窗口实例，调用地图实例、窗口实例方法
   // const onMapInited = () => {
+  //   // 地图加载完成后，可以获取地图实例、窗口实例，调用地图实例、窗口实例方法
+  //   console.log(mapRef.value.map)
   //   console.log(infoWindowRef.value.infoWindow)
   // }
-  // 如果需要在地图初始化后做某些操作，使用 onMounted
 
   const control = {
     scale: {},
@@ -43,9 +40,6 @@
       :zoom="zoom"
       :control="control"
     >
-      <div class="control-container">
-        <button @click.stop="switchInfoWindow">{{ visible ? '关闭' : '开启' }}窗口</button>
-      </div>
       <tlbs-info-window
         ref="infoWindowRef"
         :visible="visible"
@@ -68,19 +62,36 @@
     margin: 5px auto;
   }
 
-  .control-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    button {
-      padding: 1px;
-      background-color: #fff;
-      margin-right: 5px;
-      font-size: 12px;
-      border: 1px solid #ddd;
+  @media screen and (max-width: 768px) {
+    .map-wrapper {
+      width: 95%;
+      margin: 5px auto;
+    }
+
+    .control-container {
+      button {
+        padding: 2px 4px;
+        font-size: 10px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .map-wrapper {
+      width: 95%;
+      margin: 5px auto;
+      .control-container {
+        button {
+          padding: 2px 4px;
+          font-size: 14px;
+        }
+      }
+      :deep(.tmap-zoom-control) {
+        display: none;
+      }
+      :deep(.rotate-circle) {
+        display: none;
+      }
     }
   }
 </style>
