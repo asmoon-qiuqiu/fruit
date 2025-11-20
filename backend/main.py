@@ -7,7 +7,21 @@ from api.auth import router as auth_router
 from database import engine
 
 
-app = FastAPI(title="水果商城用户认证API")
+# 创建表
+# 1. 定义生命周期函数：启动时创建数据库表
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时执行的逻辑（创建数据库表）
+    SQLModel.metadata.create_all(engine)
+    print("应用启动成功，数据库表已创建")
+    yield  # 应用运行中
+    # 关闭时执行的逻辑（yield 之后）
+    print("应用正在关闭...")
+    engine.dispose()  # 释放数据库连接池资源
+    print("应用已关闭，资源已清理")
+
+
+app = FastAPI(title="水果商城用户认证API", lifespan=lifespan)
 
 # CORS 配置
 app.add_middleware(
@@ -17,16 +31,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-# 创建表
-# 1. 定义生命周期函数：启动时创建数据库表
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # 启动时执行的逻辑（替代原startup事件）
-    SQLModel.metadata.create_all(engine)
-    yield  # 应用运行中，此处可写关闭时的逻辑（如清理资源）
-
 
 # 挂载路由
 app.include_router(auth_router)
