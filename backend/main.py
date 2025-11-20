@@ -1,38 +1,54 @@
-from typing import Annotated
-
-from fastapi import FastAPI, Header, HTTPException
-from pydantic import BaseModel
-
-fake_secret_token = "coneofsilence"
-
-fake_db = {
-    "foo": {"id": "foo", "title": "Foo", "description": "There goes my hero"},
-    "bar": {"id": "bar", "title": "Bar", "description": "The bartenders"},
-}
-
-app = FastAPI()
+# main.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager  # 导入生命周期装饰器
+from sqlmodel import SQLModel
+from api.auth import router as auth_router
+from database import engine
 
 
-class Item(BaseModel):
-    id: str
-    title: str
-    description: str | None = None
+app = FastAPI(title="水果商城用户认证API")
+
+# CORS 配置
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-@app.get("/items/{item_id}", response_model=Item)
-async def read_main(item_id: str, x_token: Annotated[str, Header()]):
-    if x_token != fake_secret_token:
-        raise HTTPException(status_code=400, detail="Invalid X-Token header")
-    if item_id not in fake_db:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return fake_db[item_id]
+# 创建表
+# 1. 定义生命周期函数：启动时创建数据库表
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时执行的逻辑（替代原startup事件）
+    SQLModel.metadata.create_all(engine)
+    yield  # 应用运行中，此处可写关闭时的逻辑（如清理资源）
 
 
-@app.post("/items/", response_model=Item)
-async def create_item(item: Item, x_token: Annotated[str, Header()]):
-    if x_token != fake_secret_token:
-        raise HTTPException(status_code=400, detail="Invalid X-Token header")
-    if item.id in fake_db:
-        raise HTTPException(status_code=409, detail="Item already exists")
-    fake_db[item.id] = item
-    return item
+# 挂载路由
+app.include_router(auth_router)
+
+
+# 根路径
+@app.get("/")
+def root():
+    return {
+        "message": "水果商城用户认证API",
+        "version": "1.0.0",
+        "endpoints": {
+            "register": "/api/auth/register",
+            "login": "/api/auth/login",
+            "forgot_password": "/api/auth/forgot-password",
+            "reset_password": "/api/auth/reset-password",
+        },
+    }
+
+
+# 启动命令（可选）
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)

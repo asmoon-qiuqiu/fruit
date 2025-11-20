@@ -15,26 +15,26 @@
     <div class="login-banner">
       <div class="banner-content">
         <h3>欢迎回来</h3>
-        <p>请登录您的账户以继续使用我们的服务，体验更多专属功能。</p>
+        <p>请登录您的账户，继续探索新鲜水果世界。</p>
 
         <div class="feature-item">
-          <i class="bi bi-shield-fill"></i>
+          <i class="bi bi-apple"></i>
           <div>
-            <h4>安全保障</h4>
-            <p>多重加密保护您的账户安全</p>
+            <h4>品质保障</h4>
+            <p>严选果园直供，多重质检确保新鲜安全</p>
           </div>
         </div>
 
         <div class="feature-item">
           <i class="bi bi-lightning-charge-fill"></i>
           <div>
-            <h4>快速访问</h4>
-            <p>一键登录，无缝体验</p>
+            <h4>极速体验</h4>
+            <p>一键登录，新鲜水果随时随地选购</p>
           </div>
         </div>
       </div>
 
-      <div class="banner-footer">© 2025 您的品牌名称 保留所有权利</div>
+      <div class="banner-footer">© 2025 asmoon 保留所有权利</div>
     </div>
 
     <form
@@ -66,12 +66,12 @@
         <i
           class="bi bi-eye"
           @click="togglePassword"
-          v-show="!showPassword"
+          v-show="showPassword"
         ></i>
         <i
           class="bi bi-eye-slash"
           @click="togglePassword"
-          v-show="showPassword"
+          v-show="!showPassword"
         ></i>
       </div>
 
@@ -117,7 +117,7 @@
 
     .login-banner {
       flex: 1; // 占比 50% 左右
-      background: linear-gradient(160deg, #1b64ff, #31acfb); // 渐变蓝色背景
+      background: linear-gradient(120deg, #fff0f5, #c2185b); // 渐变背景
       color: #fff;
       padding: 40px;
       display: flex;
@@ -223,7 +223,7 @@
 
       .login-button {
         & [type='submit'] {
-          background-color: #24f563;
+          background-color: #db729b;
           border: none;
           border-radius: 10px;
           color: white;

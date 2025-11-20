@@ -43,21 +43,21 @@
         <!-- 轮播项图片替换 -->
         <div class="carousel-item active">
           <img
-            src="../../public/images/fruit-image1.png"
+            src="../../public/images/banner.jpg"
             class="d-block w-100"
             alt="水果轮播图1"
           />
         </div>
         <div class="carousel-item">
           <img
-            src="../../public/images/about.jpg"
+            src="../../public/images/banner2.jpg"
             class="d-block w-100"
             alt="水果轮播图2"
           />
         </div>
         <div class="carousel-item">
           <img
-            src="../../public/images/fruit-image1.png"
+            src="../../public/images/banner3.jpg"
             class="d-block w-100"
             alt="水果轮播图3"
           />
@@ -109,25 +109,25 @@
 
 <style scoped lang="scss">
   .banner {
-    height: 607px !important;
+    height: 500px !important;
     overflow: hidden;
     position: relative;
-    min-height: 607px !important;
-    max-height: 607px !important; // 严格限制最大高度
+    min-height: 500px !important;
+    max-height: 500px !important; // 严格限制最大高度
     display: block; // 改为 block，避免 flex 影响
 
     .carousel {
-      height: 607px !important;
-      min-height: 607px !important;
-      max-height: 607px !important;
+      height: 500px !important;
+      min-height: 500px !important;
+      max-height: 500px !important;
       margin: 0;
       padding: 0;
     }
 
     .carousel-inner {
-      height: 607px !important;
-      min-height: 607px !important;
-      max-height: 607px !important;
+      height: 500px !important;
+      min-height: 500px !important;
+      max-height: 500px !important;
       margin: 0;
       padding: 0;
       position: relative;
@@ -135,9 +135,9 @@
     }
 
     .carousel-item {
-      height: 607px !important;
-      min-height: 607px !important;
-      max-height: 607px !important;
+      height: 500px !important;
+      min-height: 500px !important;
+      max-height: 500px !important;
       margin: 0;
       padding: 0;
       // 关键修改：使用绝对定位让所有轮播项叠加
@@ -149,7 +149,7 @@
       // 确保切换过程中的状态也保持固定高度
       &.active {
         display: block !important;
-        height: 607px !important;
+        height: 500px !important;
       }
     }
 

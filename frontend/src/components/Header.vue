@@ -103,12 +103,7 @@
           >
             首页
           </router-link>
-          <a
-            href="#"
-            @click="toggleMenu"
-          >
-            水果种类
-          </a>
+
           <router-link
             to="about"
             @click="toggleMenu"
@@ -137,7 +132,6 @@
   <div class="header">
     <router-link to="/">首页</router-link>
     <router-link to="about">关于此站</router-link>
-    <a href="#">水果种类</a>
     <router-link to="contact">联系方式</router-link>
     <router-link to="login">
       <i class="bi bi-box-arrow-in-right">登录</i>

@@ -34,7 +34,7 @@
   $minor-color: #c2185b;
   .contact {
     min-height: calc(100vh - 176px);
-    background: url('@public/images/contact.jpg') no-repeat center;
+    background: url('@public/images/banner3.jpg') no-repeat center;
     background-size: cover;
     background-attachment: fixed;
     display: flex;
