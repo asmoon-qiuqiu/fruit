@@ -1,5 +1,13 @@
 <script setup>
   import { ref } from 'vue'
+  import Loading from '@/components/Loading.vue'
+  const isLogin = ref(true) // 控制登录注册切换
+  const isLoading = ref(false) // 控制loading显示/隐藏
+
+  // 切换登录注册的方法
+  const changeForm = () => {
+    isLogin.value = !isLogin.value
+  }
 
   // 控制密码框显示
   const showPassword = ref(false) // 定义变量，控制密码是否可见-默认不可见
@@ -8,8 +16,31 @@
   const togglePassword = () => {
     showPassword.value = !showPassword.value
   }
+
+  // 新增：模拟登录/注册请求（实际项目替换为接口请求）
+  const handleSubmit = async (e) => {
+    e.preventDefault() // 阻止表单默认提交
+    isLoading.value = true // 显示loading
+    try {
+      // 模拟接口请求（延迟2秒）
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // 请求成功后逻辑...
+      console.log('操作完成')
+    } catch (error) {
+      console.error('操作失败:', error)
+      // 处理错误
+    } finally {
+      // 无论成功与否都关闭 loading
+      isLoading.value = false
+    }
+  }
 </script>
 <template>
+  <!-- 引入Loading组件，通过isLoading控制显示 -->
+  <Loading
+    :visible="isLoading"
+    :text="isLogin ? '登录中...' : '注册中...'"
+  />
   <div class="bg"></div>
   <div class="login">
     <div class="login-banner">
@@ -36,11 +67,13 @@
 
       <div class="banner-footer">© 2025 asmoon 保留所有权利</div>
     </div>
-
+    <!-- 登录表单 -->
     <form
       class="login-form"
       action="#"
       method="get"
+      v-if="isLogin"
+      @submit="handleSubmit"
     >
       <h3>账户登录</h3>
       <p>请输入您的账户信息</p>
@@ -79,7 +112,7 @@
         <div class="re-pwd">
           <a
             class="register"
-            href="#"
+            @click="changeForm"
           >
             立即注册
           </a>
@@ -88,8 +121,78 @@
         <button
           type="submit"
           name="login"
+          :disabled="isLoading"
         >
-          登录
+          {{ isLoading ? '加载中...' : '登录' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- 注册表单 -->
+    <form
+      class="login-form"
+      action="#"
+      method="get"
+      @submit="handleSubmit"
+      v-else
+    >
+      <h3>账户注册</h3>
+      <p>请输入您的账户信息</p>
+      <!-- 用户名输入 -->
+      <div class="login-name">
+        <input
+          type="text"
+          name="username"
+          placeholder="用户名"
+          required
+        />
+      </div>
+      <!-- 邮箱输入 -->
+      <div class="login-name">
+        <input
+          type="email"
+          name="email"
+          placeholder="邮箱"
+          required
+        />
+      </div>
+      <!-- 密码输入 -->
+      <div class="login-password">
+        <input
+          class="pwd"
+          :type="showPassword ? 'text' : 'password'"
+          name="pwd"
+          placeholder="密码"
+          required
+        />
+        <i
+          class="bi bi-eye"
+          @click="togglePassword"
+          v-show="showPassword"
+        ></i>
+        <i
+          class="bi bi-eye-slash"
+          @click="togglePassword"
+          v-show="!showPassword"
+        ></i>
+      </div>
+
+      <div class="login-button">
+        <div class="re-pwd">
+          <a
+            class="register"
+            @click="changeForm"
+          >
+            已有账号？登录
+          </a>
+          <a href="#">忘记密码？</a>
+        </div>
+        <button
+          type="submit"
+          name="login"
+          :disabled="isLoading"
+        >
+          {{ isLoading ? '加载中...' : '注册' }}
         </button>
       </div>
     </form>
@@ -178,7 +281,8 @@
       justify-content: center;
 
       .login-name {
-        & [type='text'] {
+        & [type='text'],
+        [type='email'] {
           border-radius: 10px;
           border: 1px solid #f1f2f5;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -231,6 +335,10 @@
           text-align: center;
           font-size: 18px;
           width: 100%;
+          &:hover {
+            background-color: #c2185b;
+            cursor: pointer;
+          }
         }
 
         .re-pwd,
@@ -241,6 +349,7 @@
           .register {
             float: right;
             margin-bottom: 20px;
+            cursor: pointer;
           }
         }
       }

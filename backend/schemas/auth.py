@@ -1,50 +1,101 @@
-# schemas/auth.py
-from pydantic import BaseModel, EmailStr, validator
-from schemas.user import UserResponse
-import re
+"""
+用户认证模块数据校验模型（Pydantic v2）
+功能：定义用户注册、登录、密码重置的请求参数校验规则，以及登录成功的响应数据结构
+作用：1. 自动校验前端提交的请求数据合法性，返回标准化错误提示
+     2. 统一后端响应数据格式，实现前后端数据契约一致
+     3. 为FastAPI自动生成接口文档提供数据模型支撑
+模块依赖：Pydantic（数据校验）、re（正则匹配）、自定义用户响应模型UserResponse
+"""
+
+from pydantic import BaseModel, EmailStr, field_validator
+from schemas.user import UserResponse  # 导入用户信息响应模型（隐藏敏感字段）
+import re  # 正则表达式，用于用户名字符规则校验
 
 
 class UserRegister(BaseModel):
+    """用户注册请求模型
+    校验前端提交的注册数据，包括用户名、邮箱、密码的格式与规则
+    字段说明：
+        username: 用户名（3-50位，仅含字母、数字、下划线、中文）
+        email: 注册邮箱（Pydantic内置EmailStr自动校验邮箱格式）
+        password: 登录密码（至少6位字符）
+    """
+
     username: str
     email: EmailStr
     password: str
 
-    @validator("username")
+    @field_validator("username")
     def username_validator(cls, v):
+        """用户名自定义校验器
+        规则1：长度限制在3-50个字符之间
+        规则2：字符仅允许字母、数字、下划线、中文
+        """
         if len(v) < 3 or len(v) > 50:
             raise ValueError("用户名长度必须在3-50个字符之间")
         if not re.match(r"^[a-zA-Z0-9_\u4e00-\u9fa5]+$", v):
             raise ValueError("用户名只能包含字母、数字、下划线和中文")
         return v
 
-    @validator("password")
+    @field_validator("password")
     def password_validator(cls, v):
+        """密码自定义校验器：密码长度至少6个字符"""
         if len(v) < 6:
             raise ValueError("密码长度至少6个字符")
         return v
 
 
 class UserLogin(BaseModel):
+    """用户登录请求模型
+    校验前端提交的登录数据，支持用户名/邮箱登录（后端统一处理匹配逻辑）
+    字段说明：
+        username: 用户名或邮箱（前端可输入其一，后端无需额外校验格式，注册时已验证）
+        password: 登录密码（明文，后端加密后与数据库哈希密码对比）
+    """
+
     username: str
     password: str
 
 
 class PasswordResetRequest(BaseModel):
+    """忘记密码请求模型
+    校验前端提交的找回密码数据，仅需合法邮箱即可触发重置流程
+    字段说明：
+        email: 用户注册邮箱（Pydantic内置EmailStr自动校验格式）
+    注：即使邮箱不存在，后端也会返回统一提示，避免用户信息泄露
+    """
+
     email: EmailStr
 
 
 class PasswordResetConfirm(BaseModel):
+    """重置密码确认请求模型
+    校验前端提交的重置密码数据，包括重置令牌和新密码的合法性
+    字段说明：
+        token: 密码重置令牌（后端生成的唯一有效标识，用于验证重置权限）
+        new_password: 新登录密码（规则与注册密码一致，至少6位字符）
+    """
+
     token: str
     new_password: str
 
-    @validator("new_password")
+    @field_validator("new_password")
     def password_validator(cls, v):
+        """新密码自定义校验器：与注册密码规则保持一致，至少6个字符"""
         if len(v) < 6:
             raise ValueError("密码长度至少6个字符")
         return v
 
 
 class LoginResponse(BaseModel):
+    """用户登录响应模型
+    定义登录成功后后端返回给前端的标准化数据结构
+    字段说明：
+        message: 操作提示信息（如"登录成功"）
+        user: 用户公开信息（从UserResponse导入，隐藏哈希密码等敏感字段）
+        token: 身份认证令牌（JWT/自定义令牌，前端后续请求需携带此令牌）
+    """
+
     message: str
     user: UserResponse
     token: str
