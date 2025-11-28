@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
-  import MainFruits from '@/components/MainFruits.vue'
+  import MainFruits from '@/views/home/MainFruits.vue'
   // 1.控制返回顶部按钮显示/隐藏的状态（默认隐藏）
   const showBackTop = ref(false)
 

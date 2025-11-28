@@ -6,7 +6,6 @@ from datetime import datetime
 from model.user import User
 from model.password_reset import PasswordReset
 from schemas.auth import (
-    UserRegister,
     UserLogin,
     PasswordResetRequest,
     PasswordResetConfirm,
@@ -14,41 +13,10 @@ from schemas.auth import (
 )
 from schemas.user import UserResponse
 from database import get_session
-from utils.password import hash_password, verify_password
-from utils.token import generate_reset_token, get_reset_expiration
+from utils.hashPassword import hash_password, verify_password
+from utils.token import create_access_token, get_reset_expiration
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
-
-
-@router.post(
-    "/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED
-)
-def register(user_data: UserRegister, session: Session = Depends(get_session)):
-    statement = select(User).where(User.username == user_data.username)
-    existing_user = session.exec(statement).first()
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="用户名已被注册"
-        )
-    # 检查邮箱是否已存在
-    statement = select(User).where(User.email == user_data.email)
-    existing_email = session.exec(statement).first()
-    if existing_email:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="邮箱已被注册"
-        )
-    # 创建新用户
-    new_user = User(
-        username=user_data.username,
-        email=user_data.email,
-        hashed_password=hash_password(user_data.password),
-    )
-
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
-
-    return new_user
 
 
 @router.post("/login", response_model=LoginResponse)
@@ -103,7 +71,7 @@ def forgot_password(
         # 为了安全,即使用户不存在也返回成功消息
         return {"message": "如果该邮箱已注册,重置链接已发送到您的邮箱"}
 
-    token = generate_reset_token()
+    token = create_access_token()
     expires_at = get_reset_expiration()
 
     reset_record = PasswordReset(user_id=user.id, token=token, expires_at=expires_at)
