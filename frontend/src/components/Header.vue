@@ -1,5 +1,16 @@
 <script setup>
   import { computed, ref } from 'vue'
+  import { useUserStore } from '@/stores/user'
+
+  const userStore = useUserStore() // 创建仓库实例
+
+  // 退出登录方法 ✨
+  const handleLogout = () => {
+    userStore.logout() // 调用Pinia的logout方法清除状态
+    ElMessage.success('退出成功')
+    router.push('/') // 跳转到登录页
+  }
+
   // 1.小屏幕控制菜单显示|隐藏
   const isMenuOpen = ref(false) // 抽屉是否打开-默认关闭
   const isMenuVisible = ref(false) // 控制小屏幕抽屉菜单栏
@@ -100,6 +111,7 @@
           <router-link
             to="/"
             @click="toggleMenu"
+            class="link"
           >
             首页
           </router-link>
@@ -107,18 +119,36 @@
           <router-link
             to="about"
             @click="toggleMenu"
+            class="link"
           >
             关于此站
           </router-link>
           <router-link
             to="contact"
             @click="toggleMenu"
+            class="link"
           >
             联系方式
           </router-link>
+          <!-- 动态显示用户名/登录按钮 ✨ -->
+          <div
+            v-if="userStore.isLoggedIn"
+            class="user-info link"
+            @click="toggleMenu"
+          >
+            <span>{{ userStore.username }}</span>
+            <button
+              @click.stop="handleLogout"
+              class="logout-btn"
+            >
+              退出
+            </button>
+          </div>
           <router-link
             to="login"
             @click="toggleMenu"
+            class="link"
+            v-else
           >
             <i class="bi bi-box-arrow-in-right"></i>
             登录
@@ -133,7 +163,23 @@
     <router-link to="/">首页</router-link>
     <router-link to="about">关于此站</router-link>
     <router-link to="contact">联系方式</router-link>
-    <router-link to="login">
+    <!-- 动态显示用户名/登录按钮 -->
+    <div
+      v-if="userStore.isLoggedIn"
+      class="user-info"
+    >
+      <span class="username">{{ userStore.username }}</span>
+      <button
+        @click="handleLogout"
+        class="logout-btn"
+      >
+        退出
+      </button>
+    </div>
+    <router-link
+      to="login"
+      v-else
+    >
       <i class="bi bi-box-arrow-in-right">登录</i>
     </router-link>
 
@@ -186,7 +232,28 @@
     justify-content: space-around;
     align-items: center;
     border-radius: 5px;
-
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 15px;
+      color: #c2185b;
+      .username {
+        font-size: 18px;
+      }
+      .logout-btn {
+        background: transparent;
+        border: 1px solid #c2185b;
+        color: #c2185b;
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        &:hover {
+          background: #c2185b;
+          color: #fff;
+        }
+      }
+    }
     a {
       font-size: 18px;
       padding: 15px;
@@ -377,16 +444,28 @@
             display: flex;
             flex-direction: column;
             padding: 50px 30px 0 0;
-
-            a {
+            .user-info {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 5px;
+              padding: 15px;
+              .logout-btn {
+                border: 1px solid #fff0f5;
+                margin-top: 5px;
+                background-color: #fff0f5;
+                color: #c2185b;
+              }
+            }
+            .link {
               font-size: 18px;
               padding: 15px;
               text-decoration: none;
               color: #c2185b;
             }
 
-            a:hover,
-            a:active {
+            .link:hover,
+            .link:active {
               background-color: #c2185b;
               color: white;
             }

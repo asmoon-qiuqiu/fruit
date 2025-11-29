@@ -1,13 +1,19 @@
 <script setup>
   import { ref, reactive } from 'vue'
   import Loading from '@/components/Loading.vue'
+  import { ElMessage } from 'element-plus'
   import LoginForm from './LoginForm.vue' // 导入登录子组件
   import RegisterForm from './RegisterForm.vue' // 导入注册子组件
   import { isLogin, changeForm, showPassword, togglePassword } from '@/utils/useAuthForm'
   import { userRegisterApi } from '@/api/register'
+  import { useRouter } from 'vue-router'
+  import { useUserStore } from '@/stores/user'
 
+  const router = useRouter()
+  const userStore = useUserStore() // 创建仓库实例
   const isLoading = ref(false) // 控制loading显示/隐藏
-  // 新增：定义响应式的表单数据对象，存储登录/注册的输入内容
+
+  // 定义响应式的表单数据对象，存储登录/注册的输入内容
   const form = reactive({
     username: '', // 用户名
     email: '', // 注册邮箱
@@ -64,21 +70,21 @@
     // 执行验证
     const usernameValidation = validateUsername(form.username)
     if (!usernameValidation.isValid) {
-      alert(usernameValidation.message)
+      ElMessage.error(usernameValidation.message)
       isLoading.value = false
       return // 阻止继续执行
     }
 
     const emailValidation = validateEmail(form.email)
     if (!emailValidation.isValid) {
-      alert(emailValidation.message)
+      ElMessage.error(emailValidation.message)
       isLoading.value = false
       return
     }
 
     const passwordValidation = validatePassword(form.password)
     if (!passwordValidation.isValid) {
-      alert(passwordValidation.message)
+      ElMessage.error(passwordValidation.message)
       isLoading.value = false
       return
     }
@@ -87,17 +93,15 @@
     try {
       isLoading.value = true
       // API调用
-      const res = await userRegisterApi(form)
-
-      alert('注册成功')
-      console.log('注册成功', res, registerFormRef.value)
+      await userRegisterApi(form)
+      ElMessage.success('注册成功')
+      userStore.login(form.username)
       // 成功后重置表单
       registerFormRef.value.resetForm()
-      // 可以在这里添加成功提示或路由跳转
+      // 路由跳转
+      router.push('/')
     } catch (error) {
-      alert('注册失败:' + error.message)
-      console.error('注册失败:', error)
-
+      ElMessage.error('注册失败:' + error.message)
       // 可以根据 error 内容显示更具体的错误信息
     } finally {
       isLoading.value = false

@@ -1,5 +1,4 @@
 <script setup>
-  import { reactive } from 'vue'
   const props = defineProps({
     showPassword: {
       type: Boolean,
@@ -48,8 +47,8 @@
         type="text"
         name="username"
         placeholder="用户名"
-        required
         v-model="form.username"
+        novalidate
       />
     </div>
     <!-- 邮箱输入 -->
@@ -58,8 +57,8 @@
         type="email"
         name="email"
         placeholder="邮箱"
-        required
         v-model="form.email"
+        novalidate
       />
     </div>
     <!-- 密码输入 -->
@@ -69,8 +68,8 @@
         :type="showPassword ? 'text' : 'password'"
         name="pwd"
         placeholder="密码"
-        required
         v-model="form.password"
+        novalidate
       />
       <i
         class="bi bi-eye"

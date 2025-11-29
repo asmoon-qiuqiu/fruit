@@ -64,10 +64,9 @@ service.interceptors.response.use(
             }
         } else if (error.request) {
             // 网络请求已发送，但无响应（如后端服务未启动）
-            errorMsg = "网络异常，请检查后端服务是否运行";
+            errorMsg = "网络异常，请检查网络是否正常";
         }
 
-        // 可以在此处统一弹出错误提示（如使用Element Plus的Message）
         // ElMessage.error(errorMsg);
 
         // 返回错误信息，让业务页面自行处理
